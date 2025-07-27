@@ -1,0 +1,136 @@
+type: custom:sunsynk-power-flow-card
+cardstyle: full
+large_font: true
+show_solar: true
+panel_mode: true
+card_height: 100%
+inverter:
+  modern: true
+  colour: "#959595"
+  autarky: power
+solar:
+  mppts: 3
+  show_daily: true
+  colour: "#F4C430"
+  animation_speed: 9
+  max_power: 19565
+  pv1_name: West
+  pv2_name: North
+  display_mode: 3
+  auto_scale: true
+  efficiency: 3
+  pv3_name: East
+  pv1_max_power: 10000
+  pv2_max_power: 6440
+  pv3_max_power: 3125
+battery:
+  energy: 35000
+  show_daily: true
+  colour: pink
+  animation_speed: 6
+  max_power: 4100
+  auto_scale: true
+  show_absolute: true
+  animate: true
+  path_threshold: 90
+load:
+  show_aux: false
+  show_daily: true
+  animation_speed: 8
+  max_power: 8000
+  load1_name: Water pump
+  load1_icon: mdi:water-pump
+  load3_icon: mdi:air-conditioner
+  auto_scale: true
+  path_threshold: 90
+  additional_loads: 4
+  load2_icon: mdi:water-pump-off
+  off_threshold: 3
+  load4_icon: mdi:air-conditioner
+  load2_name: Borehole
+  load3_name: Study AC
+  load4_name: LvRoom AC
+grid:
+  show_daily_buy: true
+  no_grid_colour:
+    - 125
+    - 125
+    - 125
+  animation_speed: 8
+  max_power: 8000
+  auto_scale: true
+  grid_off_colour:
+    - 122
+    - 0
+    - 0
+  grid_name: ""
+  show_nonessential: true
+entities:
+  use_timer_248: switch.deye_home_sunsynk_toggle_system_timer
+  priority_load_243: switch.deye_home_sunsynk_toggle_priority_load
+  day_battery_charge_70: sensor.deye_home_sunsynk_day_battery_charge
+  day_battery_discharge_71: sensor.deye_home_sunsynk_day_battery_discharge
+  day_load_energy_84: sensor.deye_home_sunsynk_day_load_energy
+  day_grid_import_76: sensor.deye_home_sunsynk_total_grid_import
+  day_grid_export_77: none
+  day_pv_energy_108: sensor.deye_home_sunsynk_day_pv_energy
+  inverter_voltage_154: sensor.deye_home_sunsynk_inverter_voltage
+  load_frequency_192: sensor.deye_home_sunsynk_load_frequency
+  inverter_current_164: sensor.deye_home_sunsynk_inverter_current
+  inverter_power_175: sensor.deye_home_sunsynk_inverter_power
+  grid_power_169: sensor.deye_home_sunsynk_grid_power
+  pv1_power_186: sensor.deye_home_sunsynk_pv1_power
+  pv2_power_187: sensor.deye_home_sunsynk_pv2_power
+  pv3_power_188: sensor.deye_home_sunsynk_pv3_power
+  pv4_power_189: none
+  battery_voltage_183: sensor.deye_home_sunsynk_battery_voltage
+  battery_soc_184: sensor.deye_home_sunsynk_battery_soc
+  battery_power_190: sensor.deye_home_sunsynk_battery_power
+  battery_current_191: sensor.deye_home_sunsynk_battery_current
+  essential_power: sensor.deye_home_sunsynk_essential_power_1
+  essential_load1: sensor.water_pump_phase_a_power
+  essential_load3: sensor.study_ac_power
+  nonessential_power: sensor.deye_home_sunsynk_nonessential_power_1
+  grid_ct_power_172: sensor.deye_home_sunsynk_grid_ct_power
+  pv1_voltage_109: sensor.deye_home_sunsynk_pv1_voltage
+  pv1_current_110: sensor.deye_home_sunsynk_pv1_current
+  pv2_voltage_111: sensor.deye_home_sunsynk_pv2_voltage
+  pv2_current_112: sensor.deye_home_sunsynk_pv2_current
+  grid_connected_status_194: binary_sensor.deye_home_sunsynk_grid_connected_status
+  inverter_status_59: sensor.deye_home_sunsynk_overall_state
+  aux_power_166: sensor.deye_home_sunsynk_aux_power
+  remaining_solar: sensor.solcast_pv_forecast_forecast_remaining_today
+  battery_temp_182: sensor.deye_home_sunsynk_battery_temperature
+  radiator_temp_91: sensor.deye_home_sunsynk_radiator_temperature
+  dc_transformer_temp_90: sensor.deye_home_sunsynk_dc_transformer_temperature
+  prog1_time: sensor.deye_home_sunsynk_time_slot_1
+  prog1_capacity: number.deye_home_sunsynk_prog1_capacity
+  prog1_charge: switch.deye_home_sunsynk_prog1_grid_charge
+  prog2_time: sensor.deye_home_sunsynk_time_slot_2
+  prog2_capacity: number.deye_home_sunsynk_prog2_capacity
+  prog2_charge: switch.deye_home_sunsynk_prog2_grid_charge
+  prog3_time: sensor.deye_home_sunsynk_time_slot_3
+  prog3_capacity: number.deye_home_sunsynk_prog3_capacity
+  prog3_charge: switch.deye_home_sunsynk_prog3_grid_charge
+  prog4_time: sensor.deye_home_sunsynk_time_slot_4
+  prog4_capacity: number.deye_home_sunsynk_prog4_capacity
+  prog4_charge: switch.deye_home_sunsynk_prog4_grid_charge
+  prog5_time: sensor.deye_home_sunsynk_time_slot_5
+  prog5_capacity: number.deye_home_sunsynk_prog5_capacity
+  prog5_charge: switch.deye_home_sunsynk_prog5_grid_charge
+  prog6_time: sensor.deye_home_sunsynk_time_slot_6
+  prog6_capacity: number.deye_home_sunsynk_prog6_capacity
+  prog6_charge: switch.deye_home_sunsynk_prog6_grid_charge
+  essential_load1_extra: sensor.water_pump_total_energy
+  essential_load3_extra: sensor.deye_home_sunsynk_day_load_energy_local
+  environment_temp: sensor.bedroom_t_h_sensor_temperature
+  prepaid_units: sensor.deye_home_sunsynk_grid_power
+  essential_load2: sensor.borehole_switch_phase_a_power
+  essential_load4: sensor.ac_switch_power
+  essential_load4_extra: sensor.aedc_meter_total_energy
+  essential_load2_extra: sensor.borehole_switch_total_energy
+  pv3_voltage_113: sensor.deye_home_sunsynk_pv3_voltage
+  pv3_current_114: sensor.deye_home_sunsynk_pv3_current
+  total_pv_generation: sensor.deye_home_sunsynk_total_pv_energy
+dynamic_line_width: true
+wide: false

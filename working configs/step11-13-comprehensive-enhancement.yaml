@@ -1,0 +1,1410 @@
+type: custom:layout-card
+layout_type: custom:grid-layout
+cards:
+  # Step 11: System Timer Programming Visualization
+  - type: vertical-stack
+    cards:
+      - type: custom:mushroom-title-card
+        title: "⏰ System Timer Programming"
+        alignment: center
+      - type: horizontal-stack
+        cards:
+          # Program Slot 1
+          - type: vertical-stack
+            cards:
+              - type: custom:mushroom-template-card
+                primary: "Program 1"
+                secondary: >-
+                  {{ states("sensor.deye_home_sunsynk_time_slot_1") }} - {{
+                  states("sensor.deye_home_sunsynk_time_slot_2") }}
+                icon: mdi:timer-outline
+                icon_color: >-
+                  {{ 'green' if is_state('switch.deye_home_sunsynk_prog1_grid_charge', 'on') else 'grey' }}
+                badge_icon: mdi:lightning-bolt
+                badge_color: >-
+                  {{ 'green' if is_state('switch.deye_home_sunsynk_prog1_grid_charge', 'on') else 'grey' }}
+                fill_container: true
+              - type: entities
+                entities:
+                  - entity: number.deye_home_sunsynk_prog1_capacity
+                    name: "SOC Target"
+                    icon: mdi:battery-charging
+                  - entity: switch.deye_home_sunsynk_prog1_grid_charge
+                    name: "Grid Charge"
+                    icon: mdi:power-plug
+                state_color: true
+          
+          # Program Slot 2
+          - type: vertical-stack
+            cards:
+              - type: custom:mushroom-template-card
+                primary: "Program 2"
+                secondary: >-
+                  {{ states("sensor.deye_home_sunsynk_time_slot_2") }} - {{
+                  states("sensor.deye_home_sunsynk_time_slot_3") }}
+                icon: mdi:timer-outline
+                icon_color: >-
+                  {{ 'blue' if is_state('switch.deye_home_sunsynk_prog2_grid_charge', 'on') else 'grey' }}
+                badge_icon: mdi:lightning-bolt
+                badge_color: >-
+                  {{ 'blue' if is_state('switch.deye_home_sunsynk_prog2_grid_charge', 'on') else 'grey' }}
+                fill_container: true
+              - type: entities
+                entities:
+                  - entity: number.deye_home_sunsynk_prog2_capacity
+                    name: "SOC Target"
+                    icon: mdi:battery-charging
+                  - entity: switch.deye_home_sunsynk_prog2_grid_charge
+                    name: "Grid Charge"
+                    icon: mdi:power-plug
+                state_color: true
+
+          # Program Slot 3
+          - type: vertical-stack
+            cards:
+              - type: custom:mushroom-template-card
+                primary: "Program 3"
+                secondary: >-
+                  {{ states("sensor.deye_home_sunsynk_time_slot_3") }} - {{
+                  states("sensor.deye_home_sunsynk_time_slot_4") }}
+                icon: mdi:timer-outline
+                icon_color: >-
+                  {{ 'orange' if is_state('switch.deye_home_sunsynk_prog3_grid_charge', 'on') else 'grey' }}
+                badge_icon: mdi:lightning-bolt
+                badge_color: >-
+                  {{ 'orange' if is_state('switch.deye_home_sunsynk_prog3_grid_charge', 'on') else 'grey' }}
+                fill_container: true
+              - type: entities
+                entities:
+                  - entity: number.deye_home_sunsynk_prog3_capacity
+                    name: "SOC Target"
+                    icon: mdi:battery-charging
+                  - entity: switch.deye_home_sunsynk_prog3_grid_charge
+                    name: "Grid Charge"
+                    icon: mdi:power-plug
+                state_color: true
+
+      - type: horizontal-stack
+        cards:
+          # Program Slot 4
+          - type: vertical-stack
+            cards:
+              - type: custom:mushroom-template-card
+                primary: "Program 4"
+                secondary: >-
+                  {{ states("sensor.deye_home_sunsynk_time_slot_4") }} - {{
+                  states("sensor.deye_home_sunsynk_time_slot_5") }}
+                icon: mdi:timer-outline
+                icon_color: >-
+                  {{ 'purple' if is_state('switch.deye_home_sunsynk_prog4_grid_charge', 'on') else 'grey' }}
+                badge_icon: mdi:lightning-bolt
+                badge_color: >-
+                  {{ 'purple' if is_state('switch.deye_home_sunsynk_prog4_grid_charge', 'on') else 'grey' }}
+                fill_container: true
+              - type: entities
+                entities:
+                  - entity: number.deye_home_sunsynk_prog4_capacity
+                    name: "SOC Target"
+                    icon: mdi:battery-charging
+                  - entity: switch.deye_home_sunsynk_prog4_grid_charge
+                    name: "Grid Charge"
+                    icon: mdi:power-plug
+                state_color: true
+
+          # Program Slot 5
+          - type: vertical-stack
+            cards:
+              - type: custom:mushroom-template-card
+                primary: "Program 5"
+                secondary: >-
+                  {{ states("sensor.deye_home_sunsynk_time_slot_5") }} - {{
+                  states("sensor.deye_home_sunsynk_time_slot_6") }}
+                icon: mdi:timer-outline
+                icon_color: >-
+                  {{ 'teal' if is_state('switch.deye_home_sunsynk_prog5_grid_charge', 'on') else 'grey' }}
+                badge_icon: mdi:lightning-bolt
+                badge_color: >-
+                  {{ 'teal' if is_state('switch.deye_home_sunsynk_prog5_grid_charge', 'on') else 'grey' }}
+                fill_container: true
+              - type: entities
+                entities:
+                  - entity: number.deye_home_sunsynk_prog5_capacity
+                    name: "SOC Target"
+                    icon: mdi:battery-charging
+                  - entity: switch.deye_home_sunsynk_prog5_grid_charge
+                    name: "Grid Charge"
+                    icon: mdi:power-plug
+                state_color: true
+
+          # Program Slot 6
+          - type: vertical-stack
+            cards:
+              - type: custom:mushroom-template-card
+                primary: "Program 6"
+                secondary: >-
+                  {{ states("sensor.deye_home_sunsynk_time_slot_6") }} - {{
+                  states("sensor.deye_home_sunsynk_time_slot_1") }}
+                icon: mdi:timer-outline
+                icon_color: >-
+                  {{ 'red' if is_state('switch.deye_home_sunsynk_prog6_grid_charge', 'on') else 'grey' }}
+                badge_icon: mdi:lightning-bolt
+                badge_color: >-
+                  {{ 'red' if is_state('switch.deye_home_sunsynk_prog6_grid_charge', 'on') else 'grey' }}
+                fill_container: true
+              - type: entities
+                entities:
+                  - entity: number.deye_home_sunsynk_prog6_capacity
+                    name: "SOC Target"
+                    icon: mdi:battery-charging
+                  - entity: switch.deye_home_sunsynk_prog6_grid_charge
+                    name: "Grid Charge"
+                    icon: mdi:power-plug
+                state_color: true
+
+      # Timer Programming Status Summary
+      - type: custom:plotly-graph
+        title: "24-Hour Programming Schedule"
+        entities:
+          - entity: sensor.deye_home_sunsynk_prog1_capacity
+            name: "Prog 1 SOC Target"
+            fill: tozeroy
+            line:
+              color: rgb(0, 255, 0)
+              width: 3
+            fillcolor: rgba(0, 255, 0, 0.3)
+          - entity: sensor.deye_home_sunsynk_prog2_capacity
+            name: "Prog 2 SOC Target"
+            fill: tozeroy
+            line:
+              color: rgb(0, 0, 255)
+              width: 3
+            fillcolor: rgba(0, 0, 255, 0.3)
+          - entity: sensor.deye_home_sunsynk_prog3_capacity
+            name: "Prog 3 SOC Target"
+            fill: tozeroy
+            line:
+              color: rgb(255, 165, 0)
+              width: 3
+            fillcolor: rgba(255, 165, 0, 0.3)
+        hours_to_show: 24
+        refresh_interval: 60
+        layout:
+          height: 250
+          showlegend: true
+          legend:
+            orientation: h
+            y: -0.2
+          margin:
+            l: 50
+            r: 50
+            t: 30
+            b: 80
+          annotations:
+            - text: "Active Programming Schedule"
+              xref: paper
+              yref: paper
+              x: 0.5
+              y: 1.1
+              xanchor: center
+              showarrow: false
+              font:
+                size: 16
+        config:
+          displayModeBar: false
+    view_layout:
+      grid-area: prog
+
+  # Step 12: Individual Appliance Monitoring
+  - type: vertical-stack
+    cards:
+      - type: custom:mushroom-title-card
+        title: "🏠 Individual Appliance Monitoring"
+        alignment: center
+      
+      # Pool Pump Monitoring
+      - type: vertical-stack
+        cards:
+          - type: custom:mushroom-template-card
+            primary: "Pool Pump System"
+            secondary: >-
+              Status: {{ states('sensor.borehole_switch_phase_a_power') }}W
+            icon: mdi:water-pump
+            icon_color: >-
+              {{ 'blue' if states('sensor.borehole_switch_phase_a_power')|float > 100 else 'grey' }}
+            badge_icon: mdi:lightning-bolt
+            badge_color: >-
+              {{ 'green' if states('sensor.borehole_switch_phase_a_power')|float > 100 else 'red' }}
+            fill_container: true
+          - type: custom:plotly-graph
+            entities:
+              - entity: sensor.borehole_switch_total_energy
+                statistic: state
+                name: "Daily Pool Energy"
+                period: day
+                type: bar
+                texttemplate: "%{y} kWh"
+                marker:
+                  color: rgb(30, 144, 255)
+              - entity: sensor.borehole_switch_phase_a_power
+                name: "Current Power"
+                line:
+                  color: rgb(0, 191, 255)
+                  width: 2
+                yaxis: y2
+            hours_to_show: 168
+            title: "Pool Pump - 7 Day Energy & Power"
+            layout:
+              height: 300
+              yaxis2:
+                title: "Power (W)"
+                overlaying: y
+                side: right
+              margin:
+                l: 50
+                r: 50
+                t: 30
+                b: 30
+            config:
+              displayModeBar: false
+
+      # Geyser Monitoring  
+      - type: vertical-stack
+        cards:
+          - type: custom:mushroom-template-card
+            primary: "Geyser System"
+            secondary: >-
+              Daily: {{ states('sensor.water_pump_total_energy') }}kWh
+            icon: mdi:water-boiler
+            icon_color: orange
+            badge_icon: mdi:fire
+            badge_color: red
+            fill_container: true
+          - type: custom:plotly-graph
+            entities:
+              - entity: sensor.water_pump_total_energy
+                statistic: state
+                name: "Daily Geyser Energy"
+                period: day
+                type: bar
+                texttemplate: "%{y} kWh"
+                marker:
+                  color: rgb(255, 140, 0)
+                filters:
+                  - filter: i>0
+            hours_to_show: 168
+            title: "Geyser - 7 Day Energy Usage"
+            layout:
+              height: 300
+              margin:
+                l: 50
+                r: 50
+                t: 30
+                b: 30
+            config:
+              displayModeBar: false
+
+      # Air Conditioning Monitoring
+      - type: vertical-stack
+        cards:
+          - type: custom:mushroom-template-card
+            primary: "Air Conditioning"
+            secondary: >-
+              Power: {{ states('sensor.ac_switch_power') }}W
+            icon: mdi:air-conditioner
+            icon_color: >-
+              {{ 'cyan' if states('sensor.ac_switch_power')|float > 50 else 'grey' }}
+            badge_icon: mdi:snowflake
+            badge_color: >-
+              {{ 'blue' if states('sensor.ac_switch_power')|float > 50 else 'grey' }}
+            fill_container: true
+          - type: custom:plotly-graph
+            entities:
+              - entity: sensor.aedc_meter_total_energy
+                statistic: state
+                name: "Daily AC Energy"
+                period: day
+                type: bar
+                texttemplate: "%{y} kWh"
+                marker:
+                  color: rgb(0, 255, 255)
+              - entity: sensor.ac_switch_power
+                name: "Current Power"
+                line:
+                  color: rgb(64, 224, 208)
+                  width: 2
+                yaxis: y2
+            hours_to_show: 168
+            title: "Air Conditioning - 7 Day Energy & Power"
+            layout:
+              height: 300
+              yaxis2:
+                title: "Power (W)"
+                overlaying: y
+                side: right
+              margin:
+                l: 50
+                r: 50
+                t: 30
+                b: 30
+            config:
+              displayModeBar: false
+    view_layout:
+      grid-area: appliances
+
+  # Step 13: Monthly Analytics with 6-Month Summary
+  - type: vertical-stack
+    cards:
+      - type: custom:mushroom-title-card
+        title: "📊 Monthly Energy Analytics"
+        alignment: center
+
+      # 6-Month Solar Generation Summary
+      - type: custom:plotly-graph
+        title: "6-Month Solar Generation Trend"
+        entities:
+          - entity: sensor.deye_home_sunsynk_total_pv_energy
+            statistic: state
+            name: "Monthly Solar"
+            period: month
+            type: bar
+            texttemplate: "%{y} kWh"
+            marker:
+              color: rgb(255, 155, 48)
+        hours_to_show: 4320 # 6 months
+        layout:
+          height: 350
+          showlegend: false
+          margin:
+            l: 60
+            r: 50
+            t: 50
+            b: 50
+          annotations:
+            - text: |-
+                $fn ({hass}) =>
+                  "Total 6-Month Generation: " + 
+                  Number(hass.states['sensor.deye_home_sunsynk_total_pv_energy'].state).toFixed(1) + "kWh"
+              xref: paper
+              yref: paper
+              x: 0.5
+              y: 1.15
+              xanchor: center
+              showarrow: false
+              font:
+                size: 14
+                color: rgb(255, 155, 48)
+        config:
+          displayModeBar: false
+
+      # 6-Month Energy Balance Analysis
+      - type: custom:plotly-graph
+        title: "6-Month Energy Balance & Savings"
+        entities:
+          - entity: sensor.deye_home_sunsynk_day_grid_import_energy_local
+            statistic: state
+            name: "Grid Import"
+            period: month
+            type: bar
+            marker:
+              color: rgb(84, 144, 194)
+          - entity: sensor.deye_home_sunsynk_day_pv_energy_local
+            statistic: state
+            name: "Solar Generation"
+            period: month
+            type: bar
+            marker:
+              color: rgb(255, 155, 48)
+          - entity: sensor.deye_home_sunsynk_day_load_energy_local
+            statistic: state
+            name: "Total Consumption"
+            period: month
+            type: bar
+            marker:
+              color: rgb(95, 182, 173)
+        hours_to_show: 4320 # 6 months
+        layout:
+          height: 350
+          barmode: group
+          showlegend: true
+          legend:
+            orientation: h
+            y: -0.2
+          margin:
+            l: 60
+            r: 50
+            t: 50
+            b: 80
+          annotations:
+            - text: "Monthly Energy Balance Comparison"
+              xref: paper
+              yref: paper
+              x: 0.5
+              y: 1.1
+              xanchor: center
+              showarrow: false
+              font:
+                size: 16
+        config:
+          displayModeBar: false
+
+      # Financial Analytics with ROI
+      - type: custom:plotly-graph
+        title: "Monthly Financial Performance & ROI"
+        entities:
+          - entity: sensor.deye_home_sunsynk_day_grid_import_energy_local
+            statistic: state
+            name: |
+              $fn ({ ys,meta }) =>
+                "Grid Cost: R" + (ys[ys.length - 1] * 3.50).toFixed(2)
+            period: month
+            type: bar
+            marker:
+              color: rgb(220, 20, 60)
+            transforms:
+              - type: aggregateTransform
+                operation: multiply
+                value: 3.50
+          - entity: sensor.deye_home_sunsynk_day_pv_energy_local
+            statistic: state
+            name: |
+              $fn ({ ys,meta }) =>
+                "Solar Savings: R" + (ys[ys.length - 1] * 3.50).toFixed(2)
+            period: month
+            type: bar
+            marker:
+              color: rgb(50, 205, 50)
+            transforms:
+              - type: aggregateTransform
+                operation: multiply
+                value: 3.50
+        hours_to_show: 4320 # 6 months
+        layout:
+          height: 350
+          barmode: group
+          showlegend: true
+          legend:
+            orientation: h
+            y: -0.2
+          margin:
+            l: 60
+            r: 50
+            t: 50
+            b: 80
+          yaxis:
+            title: "Cost/Savings (ZAR)"
+          annotations:
+            - text: |-
+                $fn ({hass}) =>
+                  "6-Month Solar Savings: R" + 
+                  (Number(hass.states['sensor.deye_home_sunsynk_total_pv_energy'].state) * 3.50).toFixed(2)
+              xref: paper
+              yref: paper
+              x: 0.5
+              y: 1.15
+              xanchor: center
+              showarrow: false
+              font:
+                size: 14
+                color: rgb(50, 205, 50)
+        config:
+          displayModeBar: false
+    view_layout:
+      grid-area: monthly
+
+  # Existing Step 10 Content (Updated with responsive layout)
+  - type: custom:sunsynk-power-flow-card
+    cardstyle: full
+    large_font: true
+    show_solar: true
+    panel_mode: true
+    card_height: 100%
+    view_layout:
+      grid-area: flow
+    inverter:
+      modern: true
+      colour: "#959595"
+      autarky: power
+    solar:
+      mppts: 3
+      show_daily: true
+      colour: "#F4C430"
+      animation_speed: 9
+      max_power: 19565
+      pv1_name: West
+      pv2_name: North
+      display_mode: 3
+      auto_scale: true
+      efficiency: 3
+      pv3_name: East
+      pv1_max_power: 10000
+      pv2_max_power: 6440
+      pv3_max_power: 3125
+    battery:
+      energy: 35000
+      shutdown_soc: sensor.deye_home_sunsynk_battery_capacity_shutdown
+      show_daily: true
+      colour: pink
+      animation_speed: 6
+      max_power: 4100
+      auto_scale: true
+      show_absolute: true
+    load:
+      colour: "#44AEB9"
+      off_colour: pink
+      show_daily: true
+      load1_name: Geyser
+      load2_name: Borehole
+      load3_name: Study AC
+      load4_name: LvRoom AC
+      load1_icon: mdi:water-boiler
+      load2_icon: mdi:water-pump-off
+      load3_icon: mdi:air-conditioner
+      load4_icon: mdi:air-conditioner
+      off_threshold: 3
+    grid:
+      show_daily_buy: true
+      no_grid_colour:
+        - 125
+        - 125
+        - 125
+      animation_speed: 8
+      max_power: 8000
+      auto_scale: true
+      grid_off_colour:
+        - 122
+        - 0
+        - 0
+      grid_name: ""
+      show_nonessential: true
+    entities:
+      use_timer_248: switch.deye_home_sunsynk_toggle_system_timer
+      priority_load_243: switch.deye_home_sunsynk_toggle_priority_load
+      day_battery_charge_70: sensor.deye_home_sunsynk_day_battery_charge
+      day_battery_discharge_71: sensor.deye_home_sunsynk_day_battery_discharge
+      day_load_energy_84: sensor.deye_home_sunsynk_day_load_energy
+      day_grid_import_76: sensor.deye_home_sunsynk_day_grid_import
+      day_grid_export_77: none
+      day_pv_energy_108: sensor.deye_home_sunsynk_day_pv_energy
+      inverter_voltage_154: sensor.deye_home_sunsynk_inverter_voltage
+      load_frequency_192: sensor.deye_home_sunsynk_load_frequency
+      inverter_current_164: sensor.deye_home_sunsynk_inverter_current
+      inverter_power_175: sensor.deye_home_sunsynk_inverter_power
+      grid_power_169: sensor.deye_home_sunsynk_grid_power
+      pv1_power_186: sensor.deye_home_sunsynk_pv1_power
+      pv2_power_187: sensor.deye_home_sunsynk_pv2_power
+      pv3_power_188: sensor.deye_home_sunsynk_pv3_power
+      pv1_voltage_109: sensor.deye_home_sunsynk_pv1_voltage
+      pv2_voltage_110: sensor.deye_home_sunsynk_pv2_voltage
+      pv3_voltage_111: sensor.deye_home_sunsynk_pv3_voltage
+      pv1_current_190: sensor.deye_home_sunsynk_pv1_current
+      pv2_current_191: sensor.deye_home_sunsynk_pv2_current
+      pv3_current_192: sensor.deye_home_sunsynk_pv3_current
+      battery_voltage_183: sensor.deye_home_sunsynk_battery_voltage
+      battery_soc_184: sensor.deye_home_sunsynk_battery_soc
+      battery_power_190: sensor.deye_home_sunsynk_battery_power
+      battery_current_191: sensor.deye_home_sunsynk_battery_current
+      grid_ct_power_172: sensor.deye_home_sunsynk_grid_ct_power
+      essential_power_166: sensor.deye_home_sunsynk_essential_power_1
+      nonessential_power_172: sensor.deye_home_sunsynk_non_essential_power
+      grid_connected_status_194: binary_sensor.deye_home_sunsynk_grid_connected_status
+      inverter_status_59: sensor.deye_home_sunsynk_overall_state
+      aux_power_166: sensor.deye_home_sunsynk_aux_power
+      remaining_solar: sensor.solcast_pv_forecast_forecast_remaining_today
+      battery_temp_182: sensor.deye_home_sunsynk_battery_temperature
+      radiator_temp_91: sensor.deye_home_sunsynk_radiator_temperature
+      dc_transformer_temp_90: sensor.deye_home_sunsynk_dc_transformer_temperature
+      prog1_time: sensor.deye_home_sunsynk_time_slot_1
+      prog1_capacity: number.deye_home_sunsynk_prog1_capacity
+      prog1_charge: switch.deye_home_sunsynk_prog1_grid_charge
+      prog2_time: sensor.deye_home_sunsynk_time_slot_2
+      prog2_capacity: number.deye_home_sunsynk_prog2_capacity
+      prog2_charge: switch.deye_home_sunsynk_prog2_grid_charge
+      prog3_time: sensor.deye_home_sunsynk_time_slot_3
+      prog3_capacity: number.deye_home_sunsynk_prog3_capacity
+      prog3_charge: switch.deye_home_sunsynk_prog3_grid_charge
+      prog4_time: sensor.deye_home_sunsynk_time_slot_4
+      prog4_capacity: number.deye_home_sunsynk_prog4_capacity
+      prog4_charge: switch.deye_home_sunsynk_prog4_grid_charge
+      prog5_time: sensor.deye_home_sunsynk_time_slot_5
+      prog5_capacity: number.deye_home_sunsynk_prog5_capacity
+      prog5_charge: switch.deye_home_sunsynk_prog5_grid_charge
+      prog6_time: sensor.deye_home_sunsynk_time_slot_6
+      prog6_capacity: number.deye_home_sunsynk_prog6_capacity
+      prog6_charge: switch.deye_home_sunsynk_prog6_grid_charge
+      essential_load1_extra: sensor.water_pump_total_energy
+      essential_load3_extra: sensor.deye_home_sunsynk_day_load_energy_local
+      environment_temp: sensor.bedroom_t_h_sensor_temperature
+      prepaid_units: sensor.deye_home_sunsynk_grid_power
+      essential_load2: sensor.borehole_switch_phase_a_power
+      essential_load4: sensor.ac_switch_power
+      essential_load4_extra: sensor.aedc_meter_total_energy
+      essential_load2_extra: sensor.borehole_switch_total_energy
+      pv3_voltage_113: sensor.deye_home_sunsynk_pv3_voltage
+      pv3_current_114: sensor.deye_home_sunsynk_pv3_current
+      total_pv_generation: sensor.deye_home_sunsynk_total_pv_energy
+    dynamic_line_width: true
+    wide: false
+
+  # Main Power Flow Graph
+  - type: custom:plotly-graph
+    view_layout:
+      grid-area: graph
+    entities:
+      - entity: sensor.deye_home_sunsynk_solar_power
+        name: |
+          $fn ({ ys,meta }) =>
+            "Solar" + "🔆" + "(" +ys[ys.length - 1]+"W)"
+        fill: tozeroy
+        line:
+          color: rgb(255, 155, 48)
+          shape: spline
+      - entity: sensor.deye_home_sunsynk_essential_power_1
+        name: |
+          $fn ({ ys,meta }) =>
+            "Load" + "⚡" + "(" +ys[ys.length - 1]+"W)"
+        fill: tozeroy
+        line:
+          color: rgb(95, 182, 173)
+          shape: spline
+      - entity: sensor.deye_home_sunsynk_grid_power
+        name: |
+          $fn ({ ys,meta }) =>
+            "Grid" + "💡" + "(" +ys[ys.length - 1]+"W)"
+        fill: tozeroy
+        line:
+          color: rgb(84, 144, 194)
+          shape: spline
+      - entity: sensor.deye_home_sunsynk_battery_power
+        fill: tozeroy
+        name: |
+          $fn ({ ys,meta }) =>
+            "Battery" + "🔋" + "(" +ys[ys.length - 1]+"W)"
+        line:
+          color: rgb(243, 179, 202)
+          shape: spline
+      - entity: sensor.deye_home_sunsynk_battery_soc
+        name: |
+          $fn ({ ys,meta }) =>
+            "SOC" + "⚠️" + "(" +ys[ys.length - 1]+"%)"
+        yaxis: y2
+        line:
+          color: red
+          width: 1
+          shape: spline
+        fill: none
+    hours_to_show: 24
+    refresh_interval: 60
+    title: null
+    defaults:
+      entity:
+        show_value: false
+      yaxes:
+        fixedrange: true
+    layout:
+      legend:
+        bgcolor: rgba(0,0,0,0)
+        itemsizing: constant
+        font:
+          size: 11
+      yaxis2:
+        range:
+          - 20
+          - 105
+        fixedrange: true
+      yaxis:
+        tickmode: linear
+        dtick: 1000
+    config:
+      scrollZoom: false
+
+  # Essential AC Load Monitoring
+  - type: custom:flex-horseshoe-card
+    view_layout:
+      grid-area: g3
+    entities:
+      - entity: sensor.deye_home_sunsynk_essential_power_1
+        unit: W
+        name: AC
+      - entity: sensor.deye_home_sunsynk_inverter_voltage
+        decimals: 0
+        unit: V
+      - entity: sensor.deye_home_sunsynk_load_frequency
+        decimals: 2
+        unit: Hz
+        name: Grid
+      - entity: sensor.deye_home_sunsynk_grid_ct_power
+        decimals: 0
+        unit: W
+        name: Grid
+      - entity: sensor.deye_home_sunsynk_day_grid_import
+        decimals: 2
+        unit: kWh
+        name: Import
+      - entity: sensor.deye_home_sunsynk_day_load_energy
+        decimals: 2
+        unit: kWh
+        name: Daily
+    show:
+      horseshoe_style: autominmax
+    layout:
+      hlines:
+        - id: 0
+          xpos: 50
+          ypos: 40
+          length: 70
+          styles:
+            - opacity: 0.2;
+      vlines:
+        - id: 0
+          xpos: 50
+          ypos: 15
+          length: 50
+          styles:
+            - opacity: 0.2;
+        - id: 1
+          xpos: 50
+          ypos: 65
+          length: 50
+          styles:
+            - opacity: 0.2;
+      states:
+        - id: 0
+          entity_index: 1
+          xpos: 0
+          ypos: 12
+          styles:
+            - font-size: 0.5em;
+            - text-anchor: start;
+        - id: 2
+          entity_index: 5
+          xpos: 0
+          ypos: 12
+          styles:
+            - font-size: 0.5em;
+            - text-anchor: start;
+        - id: 3
+          entity_index: 3
+          xpos: 50
+          ypos: 80
+          styles:
+            - font-size: 0.5em;
+            - text-anchor: middle;
+    horseshoe_scale:
+      min: 0
+      max: 8000
+      width: 6
+    color_stops:
+      "0": "#5fb6ad"
+      "2000": "#5fb6ad"
+
+  # Solar Generation Monitoring
+  - type: custom:flex-horseshoe-card
+    view_layout:
+      grid-area: g1
+    entities:
+      - entity: sensor.deye_home_sunsynk_solar_power
+        decimals: 0
+        unit: W
+        name: Solar
+      - entity: sensor.deye_home_sunsynk_pv1_power
+        decimals: 0
+        unit: W
+        name: PV1
+      - entity: sensor.deye_home_sunsynk_pv2_power
+        decimals: 0
+        unit: W
+        name: PV2
+      - entity: sensor.deye_home_sunsynk_pv1_voltage
+        decimals: 0
+        unit: V
+      - entity: sensor.deye_home_sunsynk_pv2_voltage
+        decimals: 0
+        unit: V
+      - entity: sensor.deye_home_sunsynk_pv1_current
+        decimals: 1
+        unit: A
+      - entity: sensor.deye_home_sunsynk_pv2_current
+        decimals: 1
+        unit: A
+      - entity: sensor.deye_home_sunsynk_day_pv_energy
+        decimals: 2
+        unit: kWh
+        name: Daily
+      - entity: sensor.solcast_pv_forecast_forecast_remaining_today
+        decimals: 2
+        unit: kWh
+        name: Left Today
+    show:
+      horseshoe_style: autominmax
+    layout:
+      hlines:
+        - id: 0
+          xpos: 50
+          ypos: 40
+          length: 70
+          styles:
+            - opacity: 0.2;
+      vlines:
+        - id: 0
+          xpos: 50
+          ypos: 15
+          length: 50
+          styles:
+            - opacity: 0.2;
+        - id: 1
+          xpos: 50
+          ypos: 65
+          length: 50
+          styles:
+            - opacity: 0.2;
+      states:
+        - id: 0
+          entity_index: 1
+          xpos: 0
+          ypos: 12
+          styles:
+            - font-size: 0.5em;
+            - text-anchor: start;
+        - id: 2
+          entity_index: 5
+          xpos: 0
+          ypos: 12
+          styles:
+            - font-size: 0.5em;
+            - text-anchor: start;
+        - id: 3
+          entity_index: 3
+          xpos: 50
+          ypos: 80
+          styles:
+            - font-size: 0.5em;
+            - text-anchor: middle;
+    horseshoe_scale:
+      min: 0
+      max: 8000
+      width: 6
+    color_stops:
+      "0": "#5fb6ad"
+      "2000": "#5fb6ad"
+
+  # Grid Power Status  
+  - type: custom:flex-horseshoe-card
+    view_layout:
+      grid-area: g2
+    entities:
+      - entity: sensor.deye_home_sunsynk_grid_power
+        decimals: 0
+        unit: W
+        name: Grid
+      - entity: sensor.deye_home_sunsynk_grid_frequency
+        decimals: 2
+        unit: Hz
+      - entity: sensor.deye_home_sunsynk_grid_voltage
+        decimals: 0
+        unit: V
+      - entity: sensor.deye_home_sunsynk_grid_current
+        decimals: 2
+        unit: A
+      - entity: sensor.deye_home_sunsynk_day_grid_import
+        decimals: 2
+        unit: kWh
+        name: Import
+      - entity: sensor.deye_home_sunsynk_day_grid_export
+        decimals: 2
+        unit: kWh
+        name: Export
+    show:
+      horseshoe_style: autominmax
+    layout:
+      hlines:
+        - id: 0
+          xpos: 50
+          ypos: 40
+          length: 70
+          styles:
+            - opacity: 0.2;
+      vlines:
+        - id: 0
+          xpos: 50
+          ypos: 15
+          length: 50
+          styles:
+            - opacity: 0.2;
+        - id: 1
+          xpos: 50
+          ypos: 65
+          length: 50
+          styles:
+            - opacity: 0.2;
+      states:
+        - id: 0
+          entity_index: 1
+          xpos: 0
+          ypos: 12
+          styles:
+            - font-size: 0.5em;
+            - text-anchor: start;
+        - id: 2
+          entity_index: 5
+          xpos: 0
+          ypos: 12
+          styles:
+            - font-size: 0.5em;
+            - text-anchor: start;
+        - id: 3
+          entity_index: 3
+          xpos: 50
+          ypos: 80
+          styles:
+            - font-size: 0.5em;
+            - text-anchor: middle;
+    horseshoe_scale:
+      min: 0
+      max: 8000
+      width: 6
+    color_stops:
+      "0": "#5fb6ad"
+      "2000": "#5fb6ad"
+
+  # Daily Energy Summary
+  - type: custom:plotly-graph
+    view_layout:
+      grid-area: daily
+    entities:
+      - entity: sensor.deye_home_sunsynk_day_pv_energy_local
+        name: |
+          $fn ({ ys,meta }) =>
+            "Solar" + "🔆" + "(" +ys[ys.length - 1]+"kWh)"
+        marker:
+          color: rgb(255, 155, 48)
+      - entity: sensor.deye_home_sunsynk_day_load_energy_local
+        name: |
+          $fn ({ ys,meta }) =>
+            "Load" + "⚡" + "(" +ys[ys.length - 1]+"kWh)"
+        marker:
+          color: rgb(95, 182, 173)
+      - entity: sensor.deye_home_sunsynk_day_grid_import_energy_local
+        name: |
+          $fn ({ ys,meta }) =>
+            "Grid Import" + "💡" + "(" +ys[ys.length - 1]+"kWh)"
+        marker:
+          color: rgb(84, 144, 194)
+      - entity: sensor.deye_home_sunsynk_day_battery_charge_energy_local
+        name: |
+          $fn ({ ys,meta }) =>
+            "Battery Charge" + "🔋" + "(" +ys[ys.length - 1]+"kWh)"
+        marker:
+          color: rgb(255, 200, 0)
+      - entity: sensor.deye_home_sunsynk_day_battery_discharge_energy_local
+        name: |
+          $fn ({ ys,meta }) =>
+            "Battery Discharge" + "⚡" + "(" +ys[ys.length - 1]+"kWh)"
+        marker:
+          color: rgb(243, 179, 202)
+    hours_to_show: 168
+    refresh_interval: auto
+    title: Daily Energy Summary (7 Days)
+    defaults:
+      entity:
+        line:
+          width: 2
+      yaxes:
+        fixedrange: true
+    layout:
+      height: 350
+      showlegend: true
+      legend:
+        orientation: h
+        y: -0.3
+      margin:
+        l: 50
+        r: 50
+        t: 50
+        b: 100
+    config:
+      displayModeBar: false
+
+  # Battery Status Monitoring
+  - type: custom:flex-horseshoe-card
+    view_layout:
+      grid-area: bat
+    entities:
+      - entity: sensor.deye_home_sunsynk_battery_soc
+        decimals: 0
+        unit: "%"
+        name: BATTERY
+      - entity: sensor.deye_home_sunsynk_battery_voltage
+        decimals: 2
+        unit: V
+      - entity: sensor.deye_home_sunsynk_battery_current
+        decimals: 2
+        unit: A
+      - entity: sensor.deye_home_sunsynk_battery_power
+        decimals: 0
+        unit: W
+      - entity: sensor.deye_home_sunsynk_day_battery_discharge
+        decimals: 2
+        unit: kWh
+        name: Discharge
+      - entity: sensor.deye_home_sunsynk_day_battery_charge
+        decimals: 2
+        unit: kWh
+        name: Charge
+    show:
+      horseshoe_style: autominmax
+    layout:
+      hlines:
+        - id: 0
+          xpos: 50
+          ypos: 40
+          length: 70
+          styles:
+            - opacity: 0.2;
+      vlines:
+        - id: 0
+          xpos: 50
+          ypos: 15
+          length: 50
+          styles:
+            - opacity: 0.2;
+        - id: 1
+          xpos: 50
+          ypos: 65
+          length: 50
+          styles:
+            - opacity: 0.2;
+      states:
+        - id: 0
+          entity_index: 1
+          xpos: 0
+          ypos: 12
+          styles:
+            - font-size: 0.5em;
+            - text-anchor: start;
+        - id: 2
+          entity_index: 5
+          xpos: 0
+          ypos: 12
+          styles:
+            - font-size: 0.5em;
+            - text-anchor: start;
+        - id: 3
+          entity_index: 3
+          xpos: 50
+          ypos: 80
+          styles:
+            - font-size: 0.5em;
+            - text-anchor: middle;
+    horseshoe_scale:
+      min: 0
+      max: 8000
+      width: 6
+    color_stops:
+      "0": "#5fb6ad"
+      "2000": "#5fb6ad"
+
+  # System Temperature Monitoring
+  - type: custom:plotly-graph
+    view_layout:
+      grid-area: temp
+    title: System Temperature Monitoring
+    entities:
+      - entity: sensor.deye_home_sunsynk_radiator_temperature
+        name: |
+          $fn ({ ys,meta }) =>
+            "Radiator 🌡️ " + ys[ys.length - 1] + "°C"
+        line:
+          color: rgb(255, 99, 132)
+          width: 2
+      - entity: sensor.deye_home_sunsynk_dc_transformer_temperature
+        name: |
+          $fn ({ ys,meta }) =>
+            "DC Transformer 🌡️ " + ys[ys.length - 1] + "°C"
+        line:
+          color: rgb(54, 162, 235)
+          width: 2
+      - entity: sensor.deye_home_sunsynk_battery_temperature
+        name: |
+          $fn ({ ys,meta }) =>
+            "Battery 🌡️ " + ys[ys.length - 1] + "°C"
+        line:
+          color: rgb(255, 205, 86)
+          width: 2
+      - entity: sensor.bedroom_t_h_sensor_temperature
+        name: |
+          $fn ({ ys,meta }) =>
+            "Environment 🌡️ " + ys[ys.length - 1] + "°C"
+        line:
+          color: rgb(75, 192, 192)
+          width: 2
+    hours_to_show: 24
+    refresh_interval: 60
+    layout:
+      height: 300
+      showlegend: true
+      legend:
+        orientation: h
+        y: -0.2
+      margin:
+        l: 50
+        r: 50
+        t: 30
+        b: 80
+      yaxis:
+        title: "Temperature (°C)"
+    config:
+      displayModeBar: false
+
+  # System Efficiency Analytics (Existing from Step 9)
+  - type: custom:plotly-graph
+    view_layout:
+      grid-area: efficiency
+    title: System Efficiency Analytics
+    entities:
+      - entity: sensor.deye_home_sunsynk_day_pv_energy_local
+        name: |
+          $fn ({ ys,meta }) =>
+            "Solar Efficiency: " + (ys[ys.length - 1] / 19.565 * 100).toFixed(1) + "%"
+        type: scatter
+        mode: lines+markers
+        line:
+          color: rgb(255, 155, 48)
+          width: 3
+        marker:
+          size: 8
+          color: rgb(255, 155, 48)
+        yaxis: y1
+      - entity: sensor.deye_home_sunsynk_day_battery_charge_energy_local
+        name: |
+          $fn ({ ys,meta }) =>
+            "Battery Efficiency: " + ((ys[ys.length - 1] / (ys[ys.length - 1] + 0.1)) * 100).toFixed(1) + "%"
+        type: scatter
+        mode: lines+markers
+        line:
+          color: rgb(255, 200, 0)
+          width: 2
+          dash: dot
+        marker:
+          size: 6
+          color: rgb(255, 200, 0)
+        yaxis: y2
+      - entity: sensor.deye_home_sunsynk_day_grid_import_energy_local
+        name: |
+          $fn ({ ys,meta }) =>
+            "Grid Independence: " + (100 - (ys[ys.length - 1] / (ys[ys.length - 1] + 0.1) * 100)).toFixed(1) + "%"
+        type: scatter
+        mode: lines+markers
+        line:
+          color: rgb(84, 144, 194)
+          width: 2
+        marker:
+          size: 6
+          color: rgb(84, 144, 194)
+        yaxis: y2
+    hours_to_show: 168
+    layout:
+      height: 300
+      showlegend: true
+      legend:
+        orientation: h
+        y: -0.3
+      margin:
+        l: 50
+        r: 50
+        t: 50
+        b: 100
+      yaxis:
+        title: "Energy (kWh)"
+      yaxis2:
+        title: "Efficiency (%)"
+        overlaying: y
+        side: right
+        range: [0, 100]
+    config:
+      displayModeBar: false
+
+  # Financial Performance Dashboard (Existing from Step 10)
+  - type: custom:plotly-graph
+    view_layout:
+      grid-area: financial
+    title: "Financial Performance Dashboard"
+    entities:
+      - entity: sensor.deye_home_sunsynk_day_pv_energy_local
+        name: |
+          $fn ({ ys,meta }) =>
+            "Daily Solar Generation: " + ys[ys.length - 1] + "kWh"
+        type: scatter
+        mode: lines+markers
+        line:
+          color: rgb(255, 155, 48)
+          width: 3
+        marker:
+          size: 8
+          color: rgb(255, 155, 48)
+        yaxis: y1
+      - entity: sensor.deye_home_sunsynk_day_load_energy_local
+        name: |
+          $fn ({ ys,meta }) =>
+            "Daily Load Consumption: " + ys[ys.length - 1] + "kWh"
+        type: scatter
+        mode: lines+markers
+        line:
+          color: rgb(95, 182, 173)
+          width: 3
+        marker:
+          size: 8
+          color: rgb(95, 182, 173)
+        yaxis: y1
+      - entity: sensor.deye_home_sunsynk_day_grid_import_energy_local
+        name: |
+          $fn ({ ys,meta }) =>
+            "Daily Grid Import: " + ys[ys.length - 1] + "kWh"
+        type: scatter
+        mode: lines+markers
+        line:
+          color: rgb(84, 144, 194)
+          width: 3
+        marker:
+          size: 8
+          color: rgb(84, 144, 194)
+        yaxis: y1
+      - entity: sensor.deye_home_sunsynk_day_battery_charge_energy_local
+        name: |
+          $fn ({ ys,meta }) =>
+            "Daily Battery Charge: " + ys[ys.length - 1] + "kWh"
+        type: scatter
+        mode: lines+markers
+        line:
+          color: rgb(255, 200, 0)
+          width: 2
+          dash: dot
+        marker:
+          size: 6
+          color: rgb(255, 200, 0)
+        yaxis: y1
+    hours_to_show: 168
+    layout:
+      height: 350
+      showlegend: true
+      legend:
+        orientation: h
+        y: -0.3
+      margin:
+        l: 50
+        r: 50
+        t: 50
+        b: 100
+      yaxis:
+        title: "Energy (kWh)"
+      annotations:
+        - text: |-
+            $fn ({hass}) =>
+              "<span style='font-size: 18px; color: rgb(255, 155, 48);'>"
+              + Number(hass.states['sensor.deye_home_sunsynk_day_pv_energy_local'].state).toFixed(1) + "kWh</span><br>"
+              +  "<span style='font-size: 12px;'>Solar</span>"
+          xref: paper
+          yref: paper
+          xanchor: center
+          yanchor: center
+          x: 0.15
+          y: 1.15
+          showarrow: false
+        - text: |-
+            $fn ({hass}) =>
+              "<span style='font-size: 18px; color: rgb(95, 182, 173);'>"
+              + Number(hass.states['sensor.deye_home_sunsynk_day_load_energy_local'].state).toFixed(1) + "kWh</span><br>"
+              +  "<span style='font-size: 12px;'>Load</span>"
+          xref: paper
+          yref: paper
+          xanchor: center
+          yanchor: center
+          x: 0.35
+          y: 1.15
+          showarrow: false
+        - text: |-
+            $fn ({hass}) =>
+              "<span style='font-size: 18px; color: rgb(255, 200, 0);'>"
+              + Number(hass.states['sensor.deye_home_sunsynk_day_battery_charge_energy_local'].state).toFixed(1) + "kWh</span><br>"
+              +  "<span style='font-size: 12px;'>Battery</span>"
+          xref: paper
+          yref: paper
+          xanchor: center
+          yanchor: center
+          x: 0.55
+          y: 1.15
+          showarrow: false
+        - text: |-
+            $fn ({hass}) =>
+              "<span style='font-size: 18px; color: rgb(84, 144, 194);'>"
+              + Number(hass.states['sensor.deye_home_sunsynk_day_grid_import_energy_local'].state).toFixed(1) + "kWh</span><br>"
+              +  "<span style='font-size: 12px;'>Grid</span>"
+          xref: paper
+          yref: paper
+          xanchor: center
+          yanchor: center
+          x: 0.85
+          y: 1.15
+          showarrow: false
+        - text: |-
+            $fn ({hass}) =>
+              "<span style='font-size: 20px; color: rgb(50, 205, 50);'>"
+              + "Daily Savings: R" + (Number(hass.states['sensor.deye_home_sunsynk_day_pv_energy_local'].state) * 3.50).toFixed(2) + "</span><br>"
+              + "<span style='font-size: 16px; color: rgb(220, 20, 60);'>"
+              + "Grid Cost: R" + (Number(hass.states['sensor.deye_home_sunsynk_day_grid_import_energy_local'].state) * 3.50).toFixed(2) + "</span>"
+          xref: paper
+          yref: paper
+          xanchor: center
+          yanchor: center
+          x: 0.5
+          y: -0.25
+          showarrow: false
+    config:
+      displayModeBar: false
+
+# Advanced 10-Column Responsive Layout System (like home.yaml)
+layout:
+  grid-template-columns: 10% 10% 10% 10% 10% 10% 10% 10% 10% 10%
+  grid-template-rows: auto auto auto auto auto auto auto auto auto auto
+  grid-template-areas: |
+    "g1 g1 g2 g2 g3 g3 prog prog prog prog"
+    "flow flow flow flow graph graph graph graph graph graph "
+    "daily daily daily daily daily daily daily daily daily daily"
+    "temp temp temp temp temp temp temp temp temp temp"
+    "efficiency efficiency efficiency efficiency efficiency efficiency efficiency efficiency efficiency efficiency"
+    "financial financial financial financial financial financial financial financial financial financial"
+    "appliances appliances appliances appliances appliances appliances appliances appliances appliances appliances"
+    "monthly monthly monthly monthly monthly monthly monthly monthly monthly monthly"
+    "bat bat bat bat bat bat bat bat bat bat"
+  justify-items: stretch
+  mediaquery:
+    "(max-width: 800px)":
+      grid-template-columns: 100%
+      grid-template-areas: |
+        "g1"
+        "g2"
+        "g3"
+        "flow"
+        "graph"
+        "daily"
+        "prog"
+        "temp"
+        "efficiency"
+        "financial"
+        "appliances"
+        "monthly"
+        "bat"
+    "(max-width: 1300px)":
+      grid-template-columns: 33% 33% 33%
+      grid-template-rows: auto
+      grid-template-areas: |
+        "g1 g2 g3"
+        "flow flow flow"
+        "graph graph graph"
+        "daily daily daily"
+        "prog prog prog"
+        "temp temp temp"
+        "efficiency efficiency efficiency"
+        "financial financial financial"
+        "appliances appliances appliances"
+        "monthly monthly monthly"
+        "bat bat bat"

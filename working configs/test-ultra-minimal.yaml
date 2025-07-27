@@ -1,0 +1,30 @@
+type: custom:sunsynk-power-flow-card
+cardstyle: full
+show_solar: true
+panel_mode: false
+inverter:
+  modern: true
+solar:
+  mppts: 3
+  max_power: 19565
+battery:
+  energy: 35000
+  max_power: 4100
+load:
+  max_power: 8000
+grid:
+  max_power: 8000
+entities:
+  day_battery_charge_70: sensor.deye_home_sunsynk_day_battery_charge
+  day_battery_discharge_71: sensor.deye_home_sunsynk_day_battery_discharge
+  day_load_energy_84: sensor.deye_home_sunsynk_day_load_energy
+  day_grid_import_76: sensor.deye_home_sunsynk_total_grid_import
+  day_pv_energy_108: sensor.deye_home_sunsynk_day_pv_energy
+  inverter_power_175: sensor.deye_home_sunsynk_inverter_power
+  grid_power_169: sensor.deye_home_sunsynk_grid_power
+  pv1_power_186: sensor.deye_home_sunsynk_pv1_power
+  pv2_power_187: sensor.deye_home_sunsynk_pv2_power
+  pv3_power_188: sensor.deye_home_sunsynk_pv3_power
+  battery_soc_184: sensor.deye_home_sunsynk_battery_soc
+  battery_power_190: sensor.deye_home_sunsynk_battery_power
+  essential_power: sensor.deye_home_sunsynk_essential_power_1

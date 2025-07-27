@@ -1,0 +1,44 @@
+type: custom:sunsynk-power-flow-card
+cardstyle: full
+large_font: false
+show_solar: true
+panel_mode: false
+inverter:
+  modern: true
+  colour: "#959595"
+solar:
+  mppts: 3
+  show_daily: true
+  colour: "#F4C430"
+  max_power: 19565
+  pv1_name: West
+  pv2_name: North
+  pv3_name: East
+  pv1_max_power: 10000
+  pv2_max_power: 6440
+  pv3_max_power: 3125
+battery:
+  energy: 35000
+  show_daily: true
+  colour: pink
+  max_power: 4100
+  auto_scale: true
+load:
+  show_daily: true
+  max_power: 8000
+  auto_scale: true
+grid:
+  show_daily_buy: true
+  max_power: 8000
+  auto_scale: true
+entities:
+  inverter_power_175: sensor.deye_home_sunsynk_inverter_power
+  grid_power_169: sensor.deye_home_sunsynk_grid_power
+  pv1_power_186: sensor.deye_home_sunsynk_pv1_power
+  pv2_power_187: sensor.deye_home_sunsynk_pv2_power
+  pv3_power_188: sensor.deye_home_sunsynk_pv3_power
+  battery_soc_184: sensor.deye_home_sunsynk_battery_soc
+  battery_power_190: sensor.deye_home_sunsynk_battery_power
+  essential_power: sensor.deye_home_sunsynk_essential_power_1
+  nonessential_power: sensor.deye_home_sunsynk_nonessential_power_1
+  grid_connected_status_194: binary_sensor.deye_home_sunsynk_grid_connected_status
