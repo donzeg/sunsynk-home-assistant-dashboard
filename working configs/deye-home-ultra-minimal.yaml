@@ -1,0 +1,346 @@
+title: Deye Home
+path: deye-home
+icon: mdi:solar-power
+panel: false
+cards: []
+views:
+  # Ultra Minimal Overview Page - Maximum Compatibility
+  - title: Overview
+    path: overview
+    icon: mdi:view-dashboard
+    cards:
+      # Sunsynk Power Flow Card - Core entities only
+      - type: custom:sunsynk-power-flow-card
+        cardstyle: full
+        large_font: true
+        show_solar: true
+        panel_mode: false
+        card_height: 600px
+        inverter:
+          modern: true
+          colour: "#959595"
+          autarky: power
+          auto_scale: true
+        solar:
+          mppts: 2
+          show_daily: true
+          colour: "#F4C430"
+          animation_speed: 9
+          max_power: 16000
+          pv1_name: West
+          pv2_name: North
+          display_mode: 2
+          auto_scale: true
+          efficiency: 3
+          pv1_max_power: 10000
+          pv2_max_power: 6000
+        battery:
+          energy: 15960
+          shutdown_soc: 20
+          show_daily: true
+          animation_speed: 6
+          colour: "#1AAB95"
+        load:
+          show_daily: true
+          invert_load: false
+        grid:
+          show_daily_buy: true
+          show_daily_sell: false
+          colour: "#5FB6AD"
+        entities:
+          use_timer_248: switch.deye_home_sunsynk_toggle_system_timer
+          priority_load_243: switch.deye_home_sunsynk_toggle_priority_load
+          day_battery_charge_70: sensor.deye_home_sunsynk_day_battery_charge
+          day_battery_discharge_71: sensor.deye_home_sunsynk_day_battery_discharge
+          day_load_energy_84: sensor.deye_home_sunsynk_day_load_energy
+          day_grid_import_76: sensor.deye_home_sunsynk_day_grid_import
+          day_pv_energy_108: sensor.deye_home_sunsynk_day_pv_energy
+          solar_power: sensor.deye_home_sunsynk_solar_power
+          battery_soc_184: sensor.deye_home_sunsynk_battery_soc
+          battery_power_190: sensor.deye_home_sunsynk_battery_power
+          grid_power_169: sensor.deye_home_sunsynk_grid_power
+          essential_power: sensor.deye_home_sunsynk_essential_power_1
+          pv1_power_186: sensor.deye_home_sunsynk_pv1_power
+          pv2_power_187: sensor.deye_home_sunsynk_pv2_power
+          pv1_voltage_109: sensor.deye_home_sunsynk_pv1_voltage
+          pv2_voltage_110: sensor.deye_home_sunsynk_pv2_voltage
+          battery_voltage_183: sensor.deye_home_sunsynk_battery_voltage
+          battery_current_191: sensor.deye_home_sunsynk_battery_current
+          grid_connected_status_194: binary_sensor.deye_home_sunsynk_grid_connected_status
+          inverter_voltage_154: sensor.deye_home_sunsynk_inverter_voltage
+          load_frequency_192: sensor.deye_home_sunsynk_load_frequency
+          inverter_current_164: sensor.deye_home_sunsynk_inverter_current
+          dc_transformer_temperature_90: sensor.deye_home_sunsynk_dc_transformer_temperature
+          radiator_temperature_91: sensor.deye_home_sunsynk_radiator_temperature
+          battery_temperature_182: sensor.deye_home_sunsynk_battery_temperature
+
+      # Simple Status Cards - Grid Layout
+      - type: grid
+        square: false
+        columns: 4
+        cards:
+          - type: entity
+            entity: sensor.deye_home_sunsynk_solar_power
+            name: "Solar Power"
+            icon: mdi:solar-power
+            state_color: true
+            card_mod:
+              style: |
+                ha-card {
+                  height: 120px;
+                  font-size: 18px;
+                }
+
+          - type: entity
+            entity: sensor.deye_home_sunsynk_battery_soc
+            name: "Battery SOC"
+            icon: mdi:battery
+            state_color: true
+            card_mod:
+              style: |
+                ha-card {
+                  height: 120px;
+                  font-size: 18px;
+                }
+
+          - type: entity
+            entity: sensor.deye_home_sunsynk_essential_power_1
+            name: "Load Power"
+            icon: mdi:home-lightning-bolt
+            state_color: true
+            card_mod:
+              style: |
+                ha-card {
+                  height: 120px;
+                  font-size: 18px;
+                }
+
+          - type: entity
+            entity: sensor.deye_home_sunsynk_grid_power
+            name: "Grid Power"
+            icon: mdi:transmission-tower
+            state_color: true
+            card_mod:
+              style: |
+                ha-card {
+                  height: 120px;
+                  font-size: 18px;
+                }
+
+      # Daily Energy Summary - Enhanced
+      - type: entities
+        title: "Daily Energy Summary"
+        show_header_toggle: false
+        card_mod:
+          style: |
+            ha-card {
+              font-size: 16px;
+              padding: 16px;
+            }
+        entities:
+          - entity: sensor.deye_home_sunsynk_day_pv_energy
+            name: "Solar Generated Today"
+            icon: mdi:solar-power
+            secondary_info: last-updated
+          - entity: sensor.deye_home_sunsynk_day_load_energy
+            name: "Load Consumed Today"
+            icon: mdi:home-lightning-bolt
+            secondary_info: last-updated
+          - entity: sensor.deye_home_sunsynk_day_grid_import
+            name: "Grid Import Today"
+            icon: mdi:transmission-tower
+            secondary_info: last-updated
+          - entity: sensor.deye_home_sunsynk_day_battery_charge
+            name: "Battery Charged Today"
+            icon: mdi:battery-charging
+            secondary_info: last-updated
+          - entity: sensor.deye_home_sunsynk_day_battery_discharge
+            name: "Battery Discharged Today"
+            icon: mdi:battery-minus
+            secondary_info: last-updated
+        state_color: true
+
+  # Simple Analytics Page
+  - title: Analytics
+    path: analytics
+    icon: mdi:chart-line
+    cards:
+      # Basic History Graph - Enhanced Size
+      - type: history-graph
+        title: "Power Flow (24 Hours)"
+        entities:
+          - sensor.deye_home_sunsynk_solar_power
+          - sensor.deye_home_sunsynk_essential_power_1
+          - sensor.deye_home_sunsynk_battery_power
+          - sensor.deye_home_sunsynk_grid_power
+        hours_to_show: 24
+        refresh_interval: 60
+        card_mod:
+          style: |
+            ha-card {
+              height: 400px;
+            }
+
+      # Energy Statistics - Enhanced Size
+      - type: statistics-graph
+        title: "Daily Energy Statistics (7 Days)"
+        entities:
+          - sensor.deye_home_sunsynk_day_pv_energy
+          - sensor.deye_home_sunsynk_day_load_energy
+          - sensor.deye_home_sunsynk_day_grid_import
+        days_to_show: 7
+        period: day
+        stat_types:
+          - sum
+        card_mod:
+          style: |
+            ha-card {
+              height: 350px;
+            }
+
+      # Temperature Monitoring - Enhanced Size
+      - type: history-graph
+        title: "System Temperature (24h)"
+        entities:
+          - sensor.deye_home_sunsynk_radiator_temperature
+          - sensor.deye_home_sunsynk_battery_temperature
+          - sensor.deye_home_sunsynk_dc_transformer_temperature
+        hours_to_show: 24
+        card_mod:
+          style: |
+            ha-card {
+              height: 350px;
+            }
+
+  # System Control Page
+  - title: Controls
+    path: controls
+    icon: mdi:tune
+    cards:
+      # System Controls - Enhanced Layout
+      - type: entities
+        title: "System Controls"
+        show_header_toggle: false
+        card_mod:
+          style: |
+            ha-card {
+              font-size: 16px;
+              padding: 16px;
+            }
+        entities:
+          - entity: switch.deye_home_sunsynk_toggle_system_timer
+            name: "System Timer"
+            icon: mdi:timer
+            secondary_info: last-changed
+          - entity: switch.deye_home_sunsynk_toggle_priority_load
+            name: "Priority Load"
+            icon: mdi:priority-high
+            secondary_info: last-changed
+          - entity: select.deye_home_sunsynk_work_mode
+            name: "Work Mode"
+            icon: mdi:cog
+            secondary_info: last-changed
+          - entity: select.deye_home_sunsynk_energy_pattern
+            name: "Energy Pattern"
+            icon: mdi:chart-timeline
+            secondary_info: last-changed
+        state_color: true
+
+      # Programming Controls - Enhanced Layout
+      - type: entities
+        title: "Programming"
+        show_header_toggle: false
+        card_mod:
+          style: |
+            ha-card {
+              font-size: 16px;
+              padding: 16px;
+            }
+        entities:
+          - entity: switch.deye_home_sunsynk_prog1_grid_charge
+            name: "Program 1 Grid Charge"
+            secondary_info: last-changed
+          - entity: number.deye_home_sunsynk_prog1_capacity
+            name: "Program 1 SOC Target"
+            secondary_info: last-changed
+          - entity: switch.deye_home_sunsynk_prog2_grid_charge
+            name: "Program 2 Grid Charge"
+            secondary_info: last-changed
+          - entity: number.deye_home_sunsynk_prog2_capacity
+            name: "Program 2 SOC Target"
+            secondary_info: last-changed
+          - entity: switch.deye_home_sunsynk_prog3_grid_charge
+            name: "Program 3 Grid Charge"
+            secondary_info: last-changed
+          - entity: number.deye_home_sunsynk_prog3_capacity
+            name: "Program 3 SOC Target"
+            secondary_info: last-changed
+        state_color: true
+
+  # System Health Page
+  - title: System Health
+    path: system-health
+    icon: mdi:heart-pulse
+    cards:
+      # System Status
+      - type: entities
+        title: "System Status"
+        entities:
+          - entity: binary_sensor.deye_home_sunsynk_grid_connected_status
+            name: "Grid Connection"
+            icon: mdi:transmission-tower
+          - entity: sensor.deye_home_sunsynk_inverter_voltage
+            name: "Inverter Voltage"
+            icon: mdi:lightning-bolt
+          - entity: sensor.deye_home_sunsynk_load_frequency
+            name: "Grid Frequency"
+            icon: mdi:sine-wave
+          - entity: sensor.deye_home_sunsynk_inverter_current
+            name: "Inverter Current"
+            icon: mdi:current-ac
+        state_color: true
+
+      # Battery Health
+      - type: entities
+        title: "Battery Health"
+        entities:
+          - entity: sensor.deye_home_sunsynk_battery_voltage
+            name: "Battery Voltage"
+            icon: mdi:battery-charging
+          - entity: sensor.deye_home_sunsynk_battery_current
+            name: "Battery Current"
+            icon: mdi:current-dc
+          - entity: sensor.deye_home_sunsynk_battery_temperature
+            name: "Battery Temperature"
+            icon: mdi:thermometer
+          - entity: sensor.deye_home_sunsynk_battery_soc
+            name: "Battery State of Charge"
+            icon: mdi:battery
+        state_color: true
+
+      # Temperature Monitoring
+      - type: entities
+        title: "Temperature Monitoring"
+        entities:
+          - entity: sensor.deye_home_sunsynk_radiator_temperature
+            name: "Radiator Temperature"
+            icon: mdi:thermometer
+          - entity: sensor.deye_home_sunsynk_dc_transformer_temperature
+            name: "DC Transformer Temperature"
+            icon: mdi:thermometer
+          - entity: sensor.deye_home_sunsynk_battery_temperature
+            name: "Battery Temperature"
+            icon: mdi:thermometer
+        state_color: true
+
+      # System Information
+      - type: entities
+        title: "System Information"
+        entities:
+          - entity: sensor.deye_home_sunsynk_total_pv_energy
+            name: "Total Solar Generated"
+            icon: mdi:solar-power
+          - entity: sensor.deye_home_sunsynk_day_pv_energy
+            name: "Today's Generation"
+            icon: mdi:calendar-today
+        state_color: true

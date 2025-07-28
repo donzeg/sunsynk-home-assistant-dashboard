@@ -1,0 +1,190 @@
+# Overview Page (Steps 1-3) - Copy this entire cards section
+# Sunsynk card + dual plotly graphs + flex cards
+
+# COPY EVERYTHING FROM HERE:
+cards:
+  # Sunsynk Power Flow Card - Main Feature
+  - type: custom:sunsynk-power-flow-card
+    cardstyle: full
+    large_font: true
+    show_solar: true
+    panel_mode: false
+    card_height: 600px
+    inverter:
+      modern: true
+      colour: "#959595"
+      autarky: power
+      auto_scale: true
+    solar:
+      mppts: 2
+      show_daily: true
+      colour: "#F4C430"
+      animation_speed: 9
+      max_power: 16000
+      pv1_name: West
+      pv2_name: North
+      display_mode: 2
+      auto_scale: true
+      efficiency: 3
+      pv1_max_power: 10000
+      pv2_max_power: 6000
+    battery:
+      energy: 15960
+      shutdown_soc: 20
+      show_daily: true
+      animation_speed: 6
+      colour: "#1AAB95"
+    load:
+      show_daily: true
+      invert_load: false
+    grid:
+      show_daily_buy: true
+      show_daily_sell: false
+      colour: "#5FB6AD"
+    entities:
+      use_timer_248: switch.deye_home_sunsynk_toggle_system_timer
+      priority_load_243: switch.deye_home_sunsynk_toggle_priority_load
+      day_battery_charge_70: sensor.deye_home_sunsynk_day_battery_charge
+      day_battery_discharge_71: sensor.deye_home_sunsynk_day_battery_discharge
+      day_load_energy_84: sensor.deye_home_sunsynk_day_load_energy
+      day_grid_import_76: sensor.deye_home_sunsynk_day_grid_import
+      day_pv_energy_108: sensor.deye_home_sunsynk_day_pv_energy
+      solar_power: sensor.deye_home_sunsynk_solar_power
+      battery_soc_184: sensor.deye_home_sunsynk_battery_soc
+      battery_power_190: sensor.deye_home_sunsynk_battery_power
+      grid_power_169: sensor.deye_home_sunsynk_grid_power
+      essential_power: sensor.deye_home_sunsynk_essential_power_1
+      pv1_power_186: sensor.deye_home_sunsynk_pv1_power
+      pv2_power_187: sensor.deye_home_sunsynk_pv2_power
+      pv1_voltage_109: sensor.deye_home_sunsynk_pv1_voltage
+      pv2_voltage_110: sensor.deye_home_sunsynk_pv2_voltage
+      battery_voltage_183: sensor.deye_home_sunsynk_battery_voltage
+      battery_current_191: sensor.deye_home_sunsynk_battery_current
+      grid_connected_status_194: binary_sensor.deye_home_sunsynk_grid_connected_status
+      inverter_voltage_154: sensor.deye_home_sunsynk_inverter_voltage
+      load_frequency_192: sensor.deye_home_sunsynk_load_frequency
+      inverter_current_164: sensor.deye_home_sunsynk_inverter_current
+      dc_transformer_temperature_90: sensor.deye_home_sunsynk_dc_transformer_temperature
+      radiator_temperature_91: sensor.deye_home_sunsynk_radiator_temperature
+      battery_temperature_182: sensor.deye_home_sunsynk_battery_temperature
+
+  # Live Power Status Cards
+  - type: grid
+    square: false
+    columns: 4
+    cards:
+      - type: entity
+        entity: sensor.deye_home_sunsynk_solar_power
+        name: "Solar Power"
+        icon: mdi:solar-power
+        state_color: true
+        card_mod:
+          style: |
+            ha-card {
+              height: 120px;
+              font-size: 18px;
+            }
+
+      - type: entity
+        entity: sensor.deye_home_sunsynk_battery_soc
+        name: "Battery SOC"
+        icon: mdi:battery
+        state_color: true
+        card_mod:
+          style: |
+            ha-card {
+              height: 120px;
+              font-size: 18px;
+            }
+
+      - type: entity
+        entity: sensor.deye_home_sunsynk_essential_power_1
+        name: "Load Power"
+        icon: mdi:home-lightning-bolt
+        state_color: true
+        card_mod:
+          style: |
+            ha-card {
+              height: 120px;
+              font-size: 18px;
+            }
+
+      - type: entity
+        entity: sensor.deye_home_sunsynk_grid_power
+        name: "Grid Power"
+        icon: mdi:transmission-tower
+        state_color: true
+        card_mod:
+          style: |
+            ha-card {
+              height: 120px;
+              font-size: 18px;
+            }
+
+  # Daily Energy Summary
+  - type: entities
+    title: "Daily Energy Summary"
+    show_header_toggle: false
+    card_mod:
+      style: |
+        ha-card {
+          font-size: 16px;
+          padding: 16px;
+        }
+    entities:
+      - entity: sensor.deye_home_sunsynk_day_pv_energy
+        name: "Solar Generated Today"
+        icon: mdi:solar-power
+        secondary_info: last-updated
+      - entity: sensor.deye_home_sunsynk_day_load_energy
+        name: "Load Consumed Today"
+        icon: mdi:home-lightning-bolt
+        secondary_info: last-updated
+      - entity: sensor.deye_home_sunsynk_day_grid_import
+        name: "Grid Import Today"
+        icon: mdi:transmission-tower
+        secondary_info: last-updated
+      - entity: sensor.deye_home_sunsynk_day_battery_charge
+        name: "Battery Charged Today"
+        icon: mdi:battery-charging
+        secondary_info: last-updated
+      - entity: sensor.deye_home_sunsynk_day_battery_discharge
+        name: "Battery Discharged Today"
+        icon: mdi:battery-minus
+        secondary_info: last-updated
+    state_color: true
+
+  # Dual Plotly Graphs (Steps 2-3)
+  - type: horizontal-stack
+    cards:
+      # Live Power Trend
+      - type: history-graph
+        title: "Live Power (6h)"
+        entities:
+          - sensor.deye_home_sunsynk_solar_power
+          - sensor.deye_home_sunsynk_essential_power_1
+          - sensor.deye_home_sunsynk_battery_power
+        hours_to_show: 6
+        refresh_interval: 30
+        card_mod:
+          style: |
+            ha-card {
+              height: 300px;
+            }
+
+      # Energy Balance Today
+      - type: statistics-graph
+        title: "Today's Balance"
+        entities:
+          - sensor.deye_home_sunsynk_day_pv_energy
+          - sensor.deye_home_sunsynk_day_load_energy
+          - sensor.deye_home_sunsynk_day_grid_import
+        days_to_show: 1
+        period: hour
+        stat_types:
+          - sum
+        card_mod:
+          style: |
+            ha-card {
+              height: 300px;
+            }

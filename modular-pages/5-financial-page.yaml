@@ -1,0 +1,228 @@
+# Financial Page (Step 10) - Copy this entire cards section
+# ROI calculations, savings tracking, projections
+
+# COPY EVERYTHING FROM HERE:
+cards:
+  # Daily Financial Overview
+  - type: grid
+    square: false
+    columns: 4
+    cards:
+      - type: entity
+        entity: template.daily_solar_value
+        name: "Solar Value Today"
+        icon: mdi:solar-power
+        card_mod:
+          style: |
+            ha-card {
+              height: 120px;
+              font-size: 16px;
+            }
+
+      - type: entity
+        entity: template.daily_grid_cost
+        name: "Grid Cost Today"
+        icon: mdi:transmission-tower
+        card_mod:
+          style: |
+            ha-card {
+              height: 120px;
+              font-size: 16px;
+            }
+
+      - type: entity
+        entity: template.daily_savings
+        name: "Savings Today"
+        icon: mdi:cash-plus
+        card_mod:
+          style: |
+            ha-card {
+              height: 120px;
+              font-size: 16px;
+            }
+
+      - type: entity
+        entity: template.monthly_projection
+        name: "Monthly Projection"
+        icon: mdi:trending-up
+        card_mod:
+          style: |
+            ha-card {
+              height: 120px;
+              font-size: 16px;
+            }
+
+  # Financial Templates and Calculations
+  - type: entities
+    title: "Financial Analysis (R2.85/kWh)"
+    show_header_toggle: false
+    card_mod:
+      style: |
+        ha-card {
+          font-size: 16px;
+          padding: 16px;
+        }
+    entities:
+      - type: custom:template-entity-row
+        name: "Solar Generated Value Today"
+        state: >-
+          R{{ (states('sensor.deye_home_sunsynk_day_pv_energy')|float * 2.85)|round(2) }}
+        icon: mdi:solar-power
+      - type: custom:template-entity-row
+        name: "Grid Import Cost Today"
+        state: >-
+          R{{ (states('sensor.deye_home_sunsynk_day_grid_import')|float * 2.85)|round(2) }}
+        icon: mdi:transmission-tower
+      - type: custom:template-entity-row
+        name: "Net Savings Today"
+        state: >-
+          R{{ ((states('sensor.deye_home_sunsynk_day_pv_energy')|float - states('sensor.deye_home_sunsynk_day_grid_import')|float) * 2.85)|round(2) }}
+        icon: mdi:cash-plus
+      - type: custom:template-entity-row
+        name: "Self-Consumption Rate"
+        state: >-
+          {{ ((states('sensor.deye_home_sunsynk_day_pv_energy')|float - states('sensor.deye_home_sunsynk_day_grid_import')|float) / states('sensor.deye_home_sunsynk_day_pv_energy')|float * 100)|round(1) }}%
+        icon: mdi:percent
+
+  # Monthly Financial Projections
+  - type: horizontal-stack
+    cards:
+      # Monthly Estimates
+      - type: entities
+        title: "Monthly Projections"
+        card_mod:
+          style: |
+            ha-card {
+              font-size: 14px;
+              height: 300px;
+            }
+        entities:
+          - type: custom:template-entity-row
+            name: "Est. Monthly Solar Value"
+            state: >-
+              R{{ (states('sensor.deye_home_sunsynk_day_pv_energy')|float * 2.85 * 30)|round(0) }}
+            icon: mdi:solar-power
+          - type: custom:template-entity-row
+            name: "Est. Monthly Grid Cost"
+            state: >-
+              R{{ (states('sensor.deye_home_sunsynk_day_grid_import')|float * 2.85 * 30)|round(0) }}
+            icon: mdi:transmission-tower
+          - type: custom:template-entity-row
+            name: "Est. Monthly Savings"
+            state: >-
+              R{{ ((states('sensor.deye_home_sunsynk_day_pv_energy')|float - states('sensor.deye_home_sunsynk_day_grid_import')|float) * 2.85 * 30)|round(0) }}
+            icon: mdi:cash-multiple
+          - type: custom:template-entity-row
+            name: "Yearly Savings Projection"
+            state: >-
+              R{{ ((states('sensor.deye_home_sunsynk_day_pv_energy')|float - states('sensor.deye_home_sunsynk_day_grid_import')|float) * 2.85 * 365)|round(0) }}
+            icon: mdi:calendar-star
+
+      # ROI Calculations
+      - type: entities
+        title: "Return on Investment"
+        card_mod:
+          style: |
+            ha-card {
+              font-size: 14px;
+              height: 300px;
+            }
+        entities:
+          - type: custom:template-entity-row
+            name: "System Investment"
+            state: "R280,000"
+            icon: mdi:cash-minus
+          - type: custom:template-entity-row
+            name: "Annual Savings (Est.)"
+            state: >-
+              R{{ ((states('sensor.deye_home_sunsynk_day_pv_energy')|float - states('sensor.deye_home_sunsynk_day_grid_import')|float) * 2.85 * 365)|round(0) }}
+            icon: mdi:trending-up
+          - type: custom:template-entity-row
+            name: "Payback Period"
+            state: >-
+              {% set annual_savings = (states('sensor.deye_home_sunsynk_day_pv_energy')|float - states('sensor.deye_home_sunsynk_day_grid_import')|float) * 2.85 * 365 %}
+              {{ (280000 / annual_savings)|round(1) if annual_savings > 0 else 'N/A' }} years
+            icon: mdi:calendar-clock
+          - type: custom:template-entity-row
+            name: "20-Year ROI"
+            state: >-
+              {% set annual_savings = (states('sensor.deye_home_sunsynk_day_pv_energy')|float - states('sensor.deye_home_sunsynk_day_grid_import')|float) * 2.85 * 365 %}
+              R{{ ((annual_savings * 20) - 280000)|round(0) if annual_savings > 0 else 'N/A' }}
+            icon: mdi:chart-line
+
+  # 7-Day Financial Trend
+  - type: statistics-graph
+    title: "7-Day Financial Trend (Daily Savings)"
+    entities:
+      - sensor.deye_home_sunsynk_day_pv_energy
+      - sensor.deye_home_sunsynk_day_grid_import
+      - sensor.deye_home_sunsynk_day_load_energy
+    days_to_show: 7
+    period: day
+    stat_types:
+      - sum
+    card_mod:
+      style: |
+        ha-card {
+          height: 300px;
+        }
+
+  # Peak Time vs Off-Peak Analysis
+  - type: entities
+    title: "Time-of-Use Analysis"
+    card_mod:
+      style: |
+        ha-card {
+          font-size: 16px;
+          padding: 16px;
+        }
+    entities:
+      - type: custom:template-entity-row
+        name: "Peak Hours Solar (6AM-10PM)"
+        state: >-
+          {{ states('sensor.deye_home_sunsynk_day_pv_energy') }} kWh
+        icon: mdi:weather-sunny
+      - type: custom:template-entity-row
+        name: "Peak Hours Grid Usage"
+        state: >-
+          {{ states('sensor.deye_home_sunsynk_day_grid_import') }} kWh
+        icon: mdi:transmission-tower
+      - type: custom:template-entity-row
+        name: "Peak Rate Savings"
+        state: >-
+          R{{ ((states('sensor.deye_home_sunsynk_day_pv_energy')|float * 4.50) - (states('sensor.deye_home_sunsynk_day_grid_import')|float * 4.50))|round(2) }}
+        icon: mdi:cash-plus
+      - type: custom:template-entity-row
+        name: "Off-Peak Opportunity"
+        state: >-
+          {% set battery_capacity = 15.96 %}
+          {% set current_soc = states('sensor.deye_home_sunsynk_battery_soc')|float %}
+          {{ ((100 - current_soc) / 100 * battery_capacity * 1.85)|round(2) }} kWh available
+        icon: mdi:battery-clock
+
+  # Carbon Footprint Savings
+  - type: entities
+    title: "Environmental Impact"
+    card_mod:
+      style: |
+        ha-card {
+          font-size: 16px;
+          padding: 16px;
+        }
+    entities:
+      - type: custom:template-entity-row
+        name: "CO2 Saved Today"
+        state: >-
+          {{ (states('sensor.deye_home_sunsynk_day_pv_energy')|float * 0.928)|round(2) }} kg
+        icon: mdi:leaf
+      - type: custom:template-entity-row
+        name: "Monthly CO2 Reduction"
+        state: >-
+          {{ (states('sensor.deye_home_sunsynk_day_pv_energy')|float * 0.928 * 30)|round(0) }} kg
+        icon: mdi:earth
+      - type: custom:template-entity-row
+        name: "Annual Environmental Benefit"
+        state: >-
+          {{ (states('sensor.deye_home_sunsynk_day_pv_energy')|float * 0.928 * 365)|round(0) }} kg CO2
+        icon: mdi:tree
+    state_color: true

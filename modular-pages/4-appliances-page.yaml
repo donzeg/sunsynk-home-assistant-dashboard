@@ -1,0 +1,216 @@
+# Appliances Page (Step 12) - Copy this entire cards section
+# Pool, geyser, AC monitoring + monthly analysis
+
+# COPY EVERYTHING FROM HERE:
+cards:
+  # High-Power Appliance Controls
+  - type: grid
+    square: false
+    columns: 3
+    cards:
+      # Pool System
+      - type: entities
+        title: "Pool System"
+        card_mod:
+          style: |
+            ha-card {
+              font-size: 14px;
+              height: 200px;
+            }
+        entities:
+          - entity: switch.pool_pump
+            name: "Pool Pump"
+            icon: mdi:pool
+          - entity: sensor.pool_pump_power
+            name: "Power Usage"
+            icon: mdi:lightning-bolt
+          - entity: sensor.pool_temperature
+            name: "Pool Temperature"
+            icon: mdi:thermometer
+        state_color: true
+
+      # Geyser System
+      - type: entities
+        title: "Geyser System"
+        card_mod:
+          style: |
+            ha-card {
+              font-size: 14px;
+              height: 200px;
+            }
+        entities:
+          - entity: switch.geyser_element
+            name: "Geyser Element"
+            icon: mdi:water-boiler
+          - entity: sensor.geyser_power
+            name: "Power Usage"
+            icon: mdi:lightning-bolt
+          - entity: sensor.geyser_temperature
+            name: "Water Temperature"
+            icon: mdi:thermometer-water
+        state_color: true
+
+      # Air Conditioning
+      - type: entities
+        title: "Air Conditioning"
+        card_mod:
+          style: |
+            ha-card {
+              font-size: 14px;
+              height: 200px;
+            }
+        entities:
+          - entity: climate.living_room_ac
+            name: "Living Room AC"
+            icon: mdi:air-conditioner
+          - entity: sensor.ac_power_consumption
+            name: "Power Usage"
+            icon: mdi:lightning-bolt
+          - entity: sensor.indoor_temperature
+            name: "Indoor Temp"
+            icon: mdi:home-thermometer
+        state_color: true
+
+  # Smart Load Management
+  - type: entities
+    title: "Smart Load Management"
+    show_header_toggle: false
+    card_mod:
+      style: |
+        ha-card {
+          font-size: 16px;
+          padding: 16px;
+        }
+    entities:
+      - entity: switch.smart_load_management
+        name: "Auto Load Management"
+        icon: mdi:auto-fix
+        secondary_info: last-changed
+      - entity: number.load_priority_pool
+        name: "Pool Priority Level"
+        icon: mdi:priority-high
+      - entity: number.load_priority_geyser
+        name: "Geyser Priority Level"
+        icon: mdi:priority-high
+      - entity: number.load_priority_ac
+        name: "AC Priority Level"
+        icon: mdi:priority-high
+      - type: custom:template-entity-row
+        name: "Total Appliance Load"
+        state: >-
+          {{ (states('sensor.pool_pump_power')|float + 
+              states('sensor.geyser_power')|float + 
+              states('sensor.ac_power_consumption')|float)|round(0) }} W
+        icon: mdi:flash
+    state_color: true
+
+  # Appliance Power History
+  - type: history-graph
+    title: "Appliance Power Usage (24h)"
+    entities:
+      - sensor.pool_pump_power
+      - sensor.geyser_power
+      - sensor.ac_power_consumption
+    hours_to_show: 24
+    card_mod:
+      style: |
+        ha-card {
+          height: 300px;
+        }
+
+  # Monthly Energy Analysis
+  - type: horizontal-stack
+    cards:
+      # Monthly Consumption
+      - type: statistics-graph
+        title: "Monthly Appliance Usage"
+        entities:
+          - sensor.pool_pump_daily_energy
+          - sensor.geyser_daily_energy
+          - sensor.ac_daily_energy
+        days_to_show: 30
+        period: day
+        stat_types:
+          - sum
+        card_mod:
+          style: |
+            ha-card {
+              height: 350px;
+            }
+
+      # Cost Analysis
+      - type: entities
+        title: "Monthly Cost Analysis"
+        card_mod:
+          style: |
+            ha-card {
+              font-size: 14px;
+              height: 350px;
+            }
+        entities:
+          - type: custom:template-entity-row
+            name: "Pool Monthly Cost"
+            state: >-
+              R{{ (states('sensor.pool_pump_monthly_energy')|float * 2.85)|round(2) }}
+            icon: mdi:pool
+          - type: custom:template-entity-row
+            name: "Geyser Monthly Cost"
+            state: >-
+              R{{ (states('sensor.geyser_monthly_energy')|float * 2.85)|round(2) }}
+            icon: mdi:water-boiler
+          - type: custom:template-entity-row
+            name: "AC Monthly Cost"
+            state: >-
+              R{{ (states('sensor.ac_monthly_energy')|float * 2.85)|round(2) }}
+            icon: mdi:air-conditioner
+          - type: custom:template-entity-row
+            name: "Total Appliance Cost"
+            state: >-
+              R{{ ((states('sensor.pool_pump_monthly_energy')|float + 
+                    states('sensor.geyser_monthly_energy')|float + 
+                    states('sensor.ac_monthly_energy')|float) * 2.85)|round(2) }}
+            icon: mdi:cash-multiple
+
+  # Smart Scheduling
+  - type: entities
+    title: "Intelligent Appliance Scheduling"
+    card_mod:
+      style: |
+        ha-card {
+          font-size: 16px;
+          padding: 16px;
+        }
+    entities:
+      - entity: switch.pool_solar_charging
+        name: "Pool: Solar-Only Mode"
+        icon: mdi:solar-power
+        secondary_info: last-changed
+      - entity: switch.geyser_solar_heating
+        name: "Geyser: Solar Priority"
+        icon: mdi:solar-power
+        secondary_info: last-changed
+      - entity: switch.ac_eco_mode
+        name: "AC: Eco Mode"
+        icon: mdi:leaf
+        secondary_info: last-changed
+      - type: custom:template-entity-row
+        name: "Solar Surplus Available"
+        state: >-
+          {% set surplus = states('sensor.deye_home_sunsynk_solar_power')|float - states('sensor.deye_home_sunsynk_essential_power_1')|float %}
+          {{ surplus|round(0) if surplus > 0 else 0 }} W
+        icon: mdi:lightning-bolt-outline
+      - type: custom:template-entity-row
+        name: "Recommended Action"
+        state: >-
+          {% set surplus = states('sensor.deye_home_sunsynk_solar_power')|float - states('sensor.deye_home_sunsynk_essential_power_1')|float %}
+          {% if surplus > 3000 %}
+            Enable all appliances
+          {% elif surplus > 2000 %}
+            Run pool and geyser
+          {% elif surplus > 1000 %}
+            Run geyser only
+          {% else %}
+            Conserve energy
+          {% endif %}
+        icon: mdi:lightbulb
+    state_color: true

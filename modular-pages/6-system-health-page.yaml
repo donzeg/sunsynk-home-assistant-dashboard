@@ -1,0 +1,282 @@
+# System Health Page (Step 8) - Copy this entire cards section
+# Temperature monitoring, alerts, diagnostics
+
+# COPY EVERYTHING FROM HERE:
+cards:
+  # Critical System Status
+  - type: grid
+    square: false
+    columns: 4
+    cards:
+      - type: entity
+        entity: binary_sensor.deye_home_sunsynk_grid_connected_status
+        name: "Grid Status"
+        icon: mdi:transmission-tower
+        state_color: true
+        card_mod:
+          style: |
+            ha-card {
+              height: 120px;
+              font-size: 16px;
+            }
+
+      - type: entity
+        entity: sensor.deye_home_sunsynk_battery_soc
+        name: "Battery Health"
+        icon: mdi:battery-heart
+        state_color: true
+        card_mod:
+          style: |
+            ha-card {
+              height: 120px;
+              font-size: 16px;
+            }
+
+      - type: entity
+        entity: sensor.deye_home_sunsynk_radiator_temperature
+        name: "System Temp"
+        icon: mdi:thermometer-alert
+        state_color: true
+        card_mod:
+          style: |
+            ha-card {
+              height: 120px;
+              font-size: 16px;
+            }
+
+      - type: entity
+        entity: sensor.deye_home_sunsynk_inverter_voltage
+        name: "System Voltage"
+        icon: mdi:lightning-bolt
+        state_color: true
+        card_mod:
+          style: |
+            ha-card {
+              height: 120px;
+              font-size: 16px;
+            }
+
+  # System Health Diagnostics
+  - type: entities
+    title: "System Health Diagnostics"
+    show_header_toggle: false
+    card_mod:
+      style: |
+        ha-card {
+          font-size: 16px;
+          padding: 16px;
+        }
+    entities:
+      - type: custom:template-entity-row
+        name: "Overall System Status"
+        state: >-
+          {% set temp_ok = states('sensor.deye_home_sunsynk_radiator_temperature')|float < 70 %}
+          {% set battery_ok = states('sensor.deye_home_sunsynk_battery_soc')|float > 20 %}
+          {% set grid_ok = is_state('binary_sensor.deye_home_sunsynk_grid_connected_status', 'on') %}
+          {% if temp_ok and battery_ok and grid_ok %}
+            Excellent
+          {% elif temp_ok and battery_ok %}
+            Good (Grid Issue)
+          {% elif temp_ok and grid_ok %}
+            Warning (Battery Low)
+          {% else %}
+            Critical
+          {% endif %}
+        icon: mdi:shield-check
+      - type: custom:template-entity-row
+        name: "Temperature Status"
+        state: >-
+          {% set temp = states('sensor.deye_home_sunsynk_radiator_temperature')|float %}
+          {% if temp < 50 %}
+            Optimal
+          {% elif temp < 60 %}
+            Normal
+          {% elif temp < 70 %}
+            Warm
+          {% else %}
+            HOT - Check Ventilation
+          {% endif %}
+        icon: mdi:thermometer
+      - type: custom:template-entity-row
+        name: "Battery Health Score"
+        state: >-
+          {% set soc = states('sensor.deye_home_sunsynk_battery_soc')|float %}
+          {% set voltage = states('sensor.deye_home_sunsynk_battery_voltage')|float %}
+          {% if soc > 80 and voltage > 52 %}
+            Excellent
+          {% elif soc > 50 and voltage > 50 %}
+            Good
+          {% elif soc > 20 and voltage > 48 %}
+            Fair
+          {% else %}
+            Needs Attention
+          {% endif %}
+        icon: mdi:battery-heart
+    state_color: true
+
+  # Temperature Monitoring & Alerts
+  - type: horizontal-stack
+    cards:
+      # Real-time Temperatures
+      - type: entities
+        title: "Temperature Monitor"
+        card_mod:
+          style: |
+            ha-card {
+              font-size: 14px;
+              height: 300px;
+            }
+        entities:
+          - entity: sensor.deye_home_sunsynk_radiator_temperature
+            name: "Radiator Temperature"
+            icon: mdi:thermometer
+            secondary_info: last-updated
+          - entity: sensor.deye_home_sunsynk_battery_temperature
+            name: "Battery Temperature"
+            icon: mdi:thermometer-water
+            secondary_info: last-updated
+          - entity: sensor.deye_home_sunsynk_dc_transformer_temperature
+            name: "DC Transformer Temp"
+            icon: mdi:thermometer-lines
+            secondary_info: last-updated
+          - type: custom:template-entity-row
+            name: "Highest Temperature"
+            state: >-
+              {% set temps = [
+                states('sensor.deye_home_sunsynk_radiator_temperature')|float,
+                states('sensor.deye_home_sunsynk_battery_temperature')|float,
+                states('sensor.deye_home_sunsynk_dc_transformer_temperature')|float
+              ] %}
+              {{ temps|max|round(1) }}°C
+            icon: mdi:thermometer-alert
+        state_color: true
+
+      # Voltage & Current Health
+      - type: entities
+        title: "Electrical Health"
+        card_mod:
+          style: |
+            ha-card {
+              font-size: 14px;
+              height: 300px;
+            }
+        entities:
+          - entity: sensor.deye_home_sunsynk_battery_voltage
+            name: "Battery Voltage"
+            icon: mdi:battery-charging
+            secondary_info: last-updated
+          - entity: sensor.deye_home_sunsynk_battery_current
+            name: "Battery Current"
+            icon: mdi:current-dc
+            secondary_info: last-updated
+          - entity: sensor.deye_home_sunsynk_inverter_voltage
+            name: "Inverter Voltage"
+            icon: mdi:lightning-bolt
+            secondary_info: last-updated
+          - entity: sensor.deye_home_sunsynk_inverter_current
+            name: "Inverter Current"
+            icon: mdi:current-ac
+            secondary_info: last-updated
+          - entity: sensor.deye_home_sunsynk_load_frequency
+            name: "Grid Frequency"
+            icon: mdi:sine-wave
+            secondary_info: last-updated
+        state_color: true
+
+  # 24-Hour Temperature Trends
+  - type: history-graph
+    title: "24-Hour Temperature Trends"
+    entities:
+      - sensor.deye_home_sunsynk_radiator_temperature
+      - sensor.deye_home_sunsynk_battery_temperature
+      - sensor.deye_home_sunsynk_dc_transformer_temperature
+    hours_to_show: 24
+    card_mod:
+      style: |
+        ha-card {
+          height: 350px;
+        }
+
+  # System Performance Metrics
+  - type: entities
+    title: "Performance & Efficiency Metrics"
+    card_mod:
+      style: |
+        ha-card {
+          font-size: 16px;
+          padding: 16px;
+        }
+    entities:
+      - type: custom:template-entity-row
+        name: "System Uptime"
+        state: >-
+          {% if is_state('binary_sensor.deye_home_sunsynk_grid_connected_status', 'on') %}
+            Online
+          {% else %}
+            Offline
+          {% endif %}
+        icon: mdi:clock-check
+      - type: custom:template-entity-row
+        name: "Daily System Efficiency"
+        state: >-
+          {{ ((states('sensor.deye_home_sunsynk_day_pv_energy')|float / 16.0) * 100)|round(1) }}%
+        icon: mdi:gauge
+      - type: custom:template-entity-row
+        name: "Battery Cycle Health"
+        state: >-
+          {% set cycles = states('sensor.deye_home_sunsynk_day_battery_charge')|float + states('sensor.deye_home_sunsynk_day_battery_discharge')|float %}
+          {{ cycles|round(2) }} kWh cycled today
+        icon: mdi:battery-sync
+      - type: custom:template-entity-row
+        name: "Inverter Load Factor"
+        state: >-
+          {{ ((states('sensor.deye_home_sunsynk_essential_power_1')|float / 8000) * 100)|round(1) }}%
+        icon: mdi:gauge-empty
+    state_color: true
+
+  # Alerts & Maintenance
+  - type: entities
+    title: "Alerts & Maintenance Schedule"
+    card_mod:
+      style: |
+        ha-card {
+          font-size: 16px;
+          padding: 16px;
+        }
+    entities:
+      - type: custom:template-entity-row
+        name: "Temperature Alert"
+        state: >-
+          {% if states('sensor.deye_home_sunsynk_radiator_temperature')|float > 70 %}
+            ⚠️ HIGH TEMPERATURE
+          {% elif states('sensor.deye_home_sunsynk_radiator_temperature')|float > 60 %}
+            ⚡ Elevated
+          {% else %}
+            ✅ Normal
+          {% endif %}
+        icon: mdi:alert-circle
+      - type: custom:template-entity-row
+        name: "Battery Alert"
+        state: >-
+          {% if states('sensor.deye_home_sunsynk_battery_soc')|float < 20 %}
+            ⚠️ LOW BATTERY
+          {% elif states('sensor.deye_home_sunsynk_battery_soc')|float < 30 %}
+            ⚡ Battery Low
+          {% else %}
+            ✅ Normal
+          {% endif %}
+        icon: mdi:battery-alert
+      - type: custom:template-entity-row
+        name: "Grid Status Alert"
+        state: >-
+          {% if is_state('binary_sensor.deye_home_sunsynk_grid_connected_status', 'off') %}
+            ⚠️ GRID DISCONNECTED
+          {% else %}
+            ✅ Grid Connected
+          {% endif %}
+        icon: mdi:transmission-tower-off
+      - type: custom:template-entity-row
+        name: "Next Maintenance Due"
+        state: "Monthly inspection recommended"
+        icon: mdi:wrench-clock
+    state_color: true

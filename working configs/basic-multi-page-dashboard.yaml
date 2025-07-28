@@ -1,0 +1,274 @@
+title: Sunsynk Basic Multi-Page
+path: sunsynk-basic
+icon: mdi:solar-power
+panel: false
+cards: []
+views:
+  # Main Overview Page - Essential Monitoring
+  - title: Overview
+    path: overview
+    icon: mdi:view-dashboard
+    cards:
+      - type: custom:sunsynk-power-flow-card
+        cardstyle: full
+        large_font: true
+        show_solar: true
+        panel_mode: true
+        inverter:
+          modern: true
+          colour: "#959595"
+          autarky: power
+        solar:
+          mppts: 2
+          show_daily: true
+          colour: "#F4C430"
+          animation_speed: 9
+          max_power: 13000
+          pv1_name: String 1
+          pv2_name: String 2
+          display_mode: 2
+          auto_scale: true
+          efficiency: 3
+        # Replace with your entity names
+        entities:
+          use_timer_248: switch.sunsynk_toggle_system_timer
+          priority_load_243: switch.sunsynk_toggle_priority_load
+          day_battery_charge_70: sensor.sunsynk_day_battery_charge
+          day_battery_discharge_71: sensor.sunsynk_day_battery_discharge
+          day_load_energy_84: sensor.sunsynk_day_load_energy
+          day_grid_import_76: sensor.sunsynk_day_grid_import
+          day_pv_energy_108: sensor.sunsynk_day_pv_energy
+          solar_power: sensor.sunsynk_solar_power
+          battery_soc_184: sensor.sunsynk_battery_soc
+          battery_power_190: sensor.sunsynk_battery_power
+          grid_power_169: sensor.sunsynk_grid_power
+          essential_power: sensor.sunsynk_essential_power
+
+      - type: horizontal-stack
+        cards:
+          - type: custom:mushroom-template-card
+            primary: "Solar Power"
+            secondary: "{{ states('sensor.sunsynk_solar_power') }}W"
+            icon: mdi:solar-power
+            icon_color: orange
+
+          - type: custom:mushroom-template-card
+            primary: "Battery SOC"
+            secondary: "{{ states('sensor.sunsynk_battery_soc') }}%"
+            icon: mdi:battery
+            icon_color: "{{ 'green' if states('sensor.sunsynk_battery_soc')|int > 50 else 'red' }}"
+
+          - type: custom:mushroom-template-card
+            primary: "Load Power"
+            secondary: "{{ states('sensor.sunsynk_essential_power') }}W"
+            icon: mdi:home-lightning-bolt
+            icon_color: green
+
+          - type: custom:mushroom-template-card
+            primary: "Grid Power"
+            secondary: "{{ states('sensor.sunsynk_grid_power') }}W"
+            icon: mdi:transmission-tower
+            icon_color: "{{ 'red' if states('sensor.sunsynk_grid_power')|int > 0 else 'green' }}"
+
+  # Energy Analytics Page - Basic Charts
+  - title: Analytics
+    path: analytics
+    icon: mdi:chart-line
+    cards:
+      - type: custom:plotly-graph
+        title: "Daily Energy (7 Days)"
+        entities:
+          - entity: sensor.sunsynk_day_pv_energy
+            name: Solar Generation
+            statistic: state
+            period: day
+            type: bar
+            marker:
+              color: rgb(255, 155, 48)
+          - entity: sensor.sunsynk_day_load_energy
+            name: Load Consumption
+            statistic: state
+            period: day
+            type: bar
+            marker:
+              color: rgb(95, 182, 173)
+          - entity: sensor.sunsynk_day_grid_import
+            name: Grid Import
+            statistic: state
+            period: day
+            type: bar
+            marker:
+              color: rgb(84, 144, 194)
+        hours_to_show: 7d
+        layout:
+          height: 400
+
+      - type: horizontal-stack
+        cards:
+          - type: custom:plotly-graph
+            title: "Energy Sources Today"
+            entities:
+              - entity: sensor.sunsynk_day_pv_energy
+                type: pie
+                values: >-
+                  $ex [
+                  hass.states["sensor.sunsynk_day_pv_energy"].state,
+                  hass.states["sensor.sunsynk_day_grid_import"].state ]
+                labels:
+                  - Solar
+                  - Grid
+            layout:
+              height: 300
+
+          - type: custom:plotly-graph
+            title: "Live Power Flow"
+            entities:
+              - entity: sensor.sunsynk_solar_power
+                name: Solar
+                line:
+                  color: rgb(255, 155, 48)
+              - entity: sensor.sunsynk_essential_power
+                name: Load
+                line:
+                  color: rgb(95, 182, 173)
+              - entity: sensor.sunsynk_battery_power
+                name: Battery
+                line:
+                  color: rgb(243, 179, 202)
+            hours_to_show: 6
+            layout:
+              height: 300
+
+  # Basic System Programming
+  - title: Programming
+    path: programming
+    icon: mdi:timer-cog
+    cards:
+      - type: custom:mushroom-title-card
+        title: "System Timer Programming"
+        alignment: center
+
+      - type: horizontal-stack
+        cards:
+          - type: entities
+            entities:
+              - entity: switch.sunsynk_toggle_system_timer
+                name: System Timer
+              - entity: select.sunsynk_work_mode
+                name: Work Mode
+            state_color: true
+
+          - type: entities
+            entities:
+              - entity: select.sunsynk_energy_pattern
+                name: Energy Pattern
+            state_color: true
+
+      - type: entities
+        title: "Programming Slots"
+        entities:
+          - entity: switch.sunsynk_prog1_grid_charge
+            type: custom:multiple-entity-row
+            name: Program 1
+            toggle: true
+            state_header: Charge
+            state_color: true
+            icon: mdi:timer
+            entities:
+              - entity: sensor.sunsynk_time_slot_1
+                name: From
+              - entity: sensor.sunsynk_time_slot_2
+                name: To
+              - entity: number.sunsynk_prog1_capacity
+                name: SOC
+          - entity: switch.sunsynk_prog2_grid_charge
+            type: custom:multiple-entity-row
+            name: Program 2
+            toggle: true
+            state_header: Charge
+            state_color: true
+            icon: mdi:timer
+            entities:
+              - entity: sensor.sunsynk_time_slot_2
+                name: From
+              - entity: sensor.sunsynk_time_slot_3
+                name: To
+              - entity: number.sunsynk_prog2_capacity
+                name: SOC
+          - entity: switch.sunsynk_prog3_grid_charge
+            type: custom:multiple-entity-row
+            name: Program 3
+            toggle: true
+            state_header: Charge
+            state_color: true
+            icon: mdi:timer
+            entities:
+              - entity: sensor.sunsynk_time_slot_3
+                name: From
+              - entity: sensor.sunsynk_time_slot_4
+                name: To
+              - entity: number.sunsynk_prog3_capacity
+                name: SOC
+
+  # Basic System Status
+  - title: System Status
+    path: system-status
+    icon: mdi:heart-pulse
+    cards:
+      - type: entities
+        title: "System Health"
+        entities:
+          - entity: binary_sensor.sunsynk_grid_connected_status
+            name: Grid Connection
+            icon: mdi:transmission-tower
+          - entity: sensor.sunsynk_overall_state
+            name: Inverter Status
+            icon: mdi:solar-power
+          - entity: sensor.sunsynk_inverter_voltage
+            name: Inverter Voltage
+            icon: mdi:lightning-bolt
+          - entity: sensor.sunsynk_load_frequency
+            name: Grid Frequency
+            icon: mdi:sine-wave
+          - entity: sensor.sunsynk_radiator_temperature
+            name: Radiator Temperature
+            icon: mdi:thermometer
+          - entity: sensor.sunsynk_battery_temperature
+            name: Battery Temperature
+            icon: mdi:thermometer
+        state_color: true
+
+      - type: custom:plotly-graph
+        title: "System Temperatures (24h)"
+        entities:
+          - entity: sensor.sunsynk_radiator_temperature
+            name: Radiator
+            line:
+              color: rgb(255, 140, 0)
+          - entity: sensor.sunsynk_battery_temperature
+            name: Battery
+            line:
+              color: rgb(255, 20, 147)
+        hours_to_show: 24
+        layout:
+          height: 300
+
+      - type: horizontal-stack
+        cards:
+          - type: custom:mushroom-template-card
+            primary: "Today's Solar"
+            secondary: "{{ states('sensor.sunsynk_day_pv_energy') }}kWh"
+            icon: mdi:solar-power
+            icon_color: orange
+
+          - type: custom:mushroom-template-card
+            primary: "Today's Load"
+            secondary: "{{ states('sensor.sunsynk_day_load_energy') }}kWh"
+            icon: mdi:home-lightning-bolt
+            icon_color: green
+
+          - type: custom:mushroom-template-card
+            primary: "Grid Import"
+            secondary: "{{ states('sensor.sunsynk_day_grid_import') }}kWh"
+            icon: mdi:transmission-tower
+            icon_color: "{{ 'red' if states('sensor.sunsynk_day_grid_import')|float > 0 else 'green' }}"

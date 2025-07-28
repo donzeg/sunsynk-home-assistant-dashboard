@@ -1,0 +1,152 @@
+# Analytics Page (Steps 6-9) - Copy this entire cards section
+# Solar forecast, pie charts, efficiency, temperature
+
+# COPY EVERYTHING FROM HERE:
+cards:
+  # Solar Efficiency Analysis
+  - type: entities
+    title: "Solar Performance Analytics"
+    show_header_toggle: false
+    card_mod:
+      style: |
+        ha-card {
+          font-size: 16px;
+          padding: 16px;
+        }
+    entities:
+      - type: custom:template-entity-row
+        name: "Solar Efficiency"
+        state: >-
+          {{ ((states('sensor.deye_home_sunsynk_day_pv_energy')|float / 16.0) * 100)|round(1) }}%
+        icon: mdi:solar-power
+      - type: custom:template-entity-row
+        name: "Battery Efficiency"
+        state: >-
+          {{ ((states('sensor.deye_home_sunsynk_battery_soc')|float / 100) * states('sensor.deye_home_sunsynk_day_battery_charge')|float)|round(2) }}kWh
+        icon: mdi:battery-charging
+      - type: custom:template-entity-row
+        name: "Grid Independence"
+        state: >-
+          {{ (100 - ((states('sensor.deye_home_sunsynk_day_grid_import')|float / states('sensor.deye_home_sunsynk_day_load_energy')|float) * 100))|round(1) }}%
+        icon: mdi:transmission-tower-off
+
+  # Weekly Power Trends
+  - type: history-graph
+    title: "Weekly Power Trends (7 Days)"
+    entities:
+      - sensor.deye_home_sunsynk_solar_power
+      - sensor.deye_home_sunsynk_essential_power_1
+      - sensor.deye_home_sunsynk_battery_power
+      - sensor.deye_home_sunsynk_grid_power
+    hours_to_show: 168  # 7 days
+    refresh_interval: 300
+    card_mod:
+      style: |
+        ha-card {
+          height: 400px;
+        }
+
+  # Energy Distribution (Pie Chart Style)
+  - type: horizontal-stack
+    cards:
+      # Daily Energy Sources
+      - type: entities
+        title: "Energy Sources Today"
+        card_mod:
+          style: |
+            ha-card {
+              height: 300px;
+              font-size: 14px;
+            }
+        entities:
+          - entity: sensor.deye_home_sunsynk_day_pv_energy
+            name: "Solar Generation"
+            icon: mdi:solar-power
+            secondary_info: entity-id
+          - entity: sensor.deye_home_sunsynk_day_grid_import
+            name: "Grid Import"
+            icon: mdi:transmission-tower
+            secondary_info: entity-id
+          - entity: sensor.deye_home_sunsynk_day_battery_discharge
+            name: "Battery Discharge"
+            icon: mdi:battery-minus
+            secondary_info: entity-id
+
+      # Energy Consumption
+      - type: entities
+        title: "Energy Usage Today"
+        card_mod:
+          style: |
+            ha-card {
+              height: 300px;
+              font-size: 14px;
+            }
+        entities:
+          - entity: sensor.deye_home_sunsynk_day_load_energy
+            name: "Load Consumption"
+            icon: mdi:home-lightning-bolt
+            secondary_info: entity-id
+          - entity: sensor.deye_home_sunsynk_day_battery_charge
+            name: "Battery Storage"
+            icon: mdi:battery-plus
+            secondary_info: entity-id
+          - type: custom:template-entity-row
+            name: "Grid Export"
+            state: "0 kWh"
+            icon: mdi:transmission-tower-export
+
+  # Temperature Analytics
+  - type: history-graph
+    title: "System Temperature Analysis (24h)"
+    entities:
+      - sensor.deye_home_sunsynk_radiator_temperature
+      - sensor.deye_home_sunsynk_battery_temperature
+      - sensor.deye_home_sunsynk_dc_transformer_temperature
+    hours_to_show: 24
+    card_mod:
+      style: |
+        ha-card {
+          height: 350px;
+        }
+
+  # Monthly Energy Statistics
+  - type: statistics-graph
+    title: "Monthly Energy Trends"
+    entities:
+      - sensor.deye_home_sunsynk_day_pv_energy
+      - sensor.deye_home_sunsynk_day_load_energy
+      - sensor.deye_home_sunsynk_day_grid_import
+    days_to_show: 30
+    period: day
+    stat_types:
+      - sum
+      - mean
+    card_mod:
+      style: |
+        ha-card {
+          height: 400px;
+        }
+
+  # Solar Forecast (Placeholder for Weather Integration)
+  - type: entities
+    title: "Solar Forecast & Conditions"
+    card_mod:
+      style: |
+        ha-card {
+          font-size: 16px;
+          padding: 16px;
+        }
+    entities:
+      - type: custom:template-entity-row
+        name: "Current Solar Output"
+        state: "{{ states('sensor.deye_home_sunsynk_solar_power') }} W"
+        icon: mdi:weather-sunny
+      - type: custom:template-entity-row
+        name: "Peak Today"
+        state: "{{ states('sensor.deye_home_sunsynk_day_pv_energy') }} kWh"
+        icon: mdi:trending-up
+      - type: custom:template-entity-row
+        name: "System Efficiency"
+        state: >-
+          {{ ((states('sensor.deye_home_sunsynk_day_pv_energy')|float / 16.0) * 100)|round(1) }}%
+        icon: mdi:percent

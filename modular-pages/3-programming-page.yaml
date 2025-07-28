@@ -1,0 +1,233 @@
+# Programming Page (Step 11) - Copy this entire cards section
+# Complete 6-slot timer programming interface
+
+# COPY EVERYTHING FROM HERE:
+cards:
+  # System Timer Controls
+  - type: entities
+    title: "System Timer Configuration"
+    show_header_toggle: false
+    card_mod:
+      style: |
+        ha-card {
+          font-size: 16px;
+          padding: 16px;
+        }
+    entities:
+      - entity: switch.deye_home_sunsynk_toggle_system_timer
+        name: "Master System Timer"
+        icon: mdi:timer
+        secondary_info: last-changed
+      - entity: select.deye_home_sunsynk_work_mode
+        name: "Work Mode"
+        icon: mdi:cog
+        secondary_info: last-changed
+      - entity: select.deye_home_sunsynk_energy_pattern
+        name: "Energy Pattern"
+        icon: mdi:chart-timeline
+        secondary_info: last-changed
+      - entity: switch.deye_home_sunsynk_toggle_priority_load
+        name: "Priority Load"
+        icon: mdi:priority-high
+        secondary_info: last-changed
+    state_color: true
+
+  # Programming Slot 1 & 2
+  - type: horizontal-stack
+    cards:
+      - type: entities
+        title: "Program Slot 1"
+        card_mod:
+          style: |
+            ha-card {
+              font-size: 14px;
+              padding: 12px;
+            }
+        entities:
+          - entity: switch.deye_home_sunsynk_prog1_grid_charge
+            name: "Grid Charge Enable"
+            icon: mdi:battery-charging
+          - entity: number.deye_home_sunsynk_prog1_capacity
+            name: "Target SOC (%)"
+            icon: mdi:battery-50
+          - entity: time.deye_home_sunsynk_prog1_charge_start_time
+            name: "Start Time"
+            icon: mdi:clock-start
+          - entity: time.deye_home_sunsynk_prog1_charge_end_time
+            name: "End Time"
+            icon: mdi:clock-end
+          - entity: select.deye_home_sunsynk_prog1_charge_current
+            name: "Charge Current"
+            icon: mdi:current-dc
+        state_color: true
+
+      - type: entities
+        title: "Program Slot 2"
+        card_mod:
+          style: |
+            ha-card {
+              font-size: 14px;
+              padding: 12px;
+            }
+        entities:
+          - entity: switch.deye_home_sunsynk_prog2_grid_charge
+            name: "Grid Charge Enable"
+            icon: mdi:battery-charging
+          - entity: number.deye_home_sunsynk_prog2_capacity
+            name: "Target SOC (%)"
+            icon: mdi:battery-50
+          - entity: time.deye_home_sunsynk_prog2_charge_start_time
+            name: "Start Time"
+            icon: mdi:clock-start
+          - entity: time.deye_home_sunsynk_prog2_charge_end_time
+            name: "End Time"
+            icon: mdi:clock-end
+          - entity: select.deye_home_sunsynk_prog2_charge_current
+            name: "Charge Current"
+            icon: mdi:current-dc
+        state_color: true
+
+  # Programming Slot 3 & 4
+  - type: horizontal-stack
+    cards:
+      - type: entities
+        title: "Program Slot 3"
+        card_mod:
+          style: |
+            ha-card {
+              font-size: 14px;
+              padding: 12px;
+            }
+        entities:
+          - entity: switch.deye_home_sunsynk_prog3_grid_charge
+            name: "Grid Charge Enable"
+            icon: mdi:battery-charging
+          - entity: number.deye_home_sunsynk_prog3_capacity
+            name: "Target SOC (%)"
+            icon: mdi:battery-50
+          - entity: time.deye_home_sunsynk_prog3_charge_start_time
+            name: "Start Time"
+            icon: mdi:clock-start
+          - entity: time.deye_home_sunsynk_prog3_charge_end_time
+            name: "End Time"
+            icon: mdi:clock-end
+          - entity: select.deye_home_sunsynk_prog3_charge_current
+            name: "Charge Current"
+            icon: mdi:current-dc
+        state_color: true
+
+      - type: entities
+        title: "Program Slot 4"
+        card_mod:
+          style: |
+            ha-card {
+              font-size: 14px;
+              padding: 12px;
+            }
+        entities:
+          - entity: switch.deye_home_sunsynk_prog4_grid_charge
+            name: "Grid Charge Enable"
+            icon: mdi:battery-charging
+          - entity: number.deye_home_sunsynk_prog4_capacity
+            name: "Target SOC (%)"
+            icon: mdi:battery-50
+          - entity: time.deye_home_sunsynk_prog4_charge_start_time
+            name: "Start Time"
+            icon: mdi:clock-start
+          - entity: time.deye_home_sunsynk_prog4_charge_end_time
+            name: "End Time"
+            icon: mdi:clock-end
+          - entity: select.deye_home_sunsynk_prog4_charge_current
+            name: "Charge Current"
+            icon: mdi:current-dc
+        state_color: true
+
+  # Programming Slot 5 & 6
+  - type: horizontal-stack
+    cards:
+      - type: entities
+        title: "Program Slot 5"
+        card_mod:
+          style: |
+            ha-card {
+              font-size: 14px;
+              padding: 12px;
+            }
+        entities:
+          - entity: switch.deye_home_sunsynk_prog5_grid_charge
+            name: "Grid Charge Enable"
+            icon: mdi:battery-charging
+          - entity: number.deye_home_sunsynk_prog5_capacity
+            name: "Target SOC (%)"
+            icon: mdi:battery-50
+          - entity: time.deye_home_sunsynk_prog5_charge_start_time
+            name: "Start Time"
+            icon: mdi:clock-start
+          - entity: time.deye_home_sunsynk_prog5_charge_end_time
+            name: "End Time"
+            icon: mdi:clock-end
+          - entity: select.deye_home_sunsynk_prog5_charge_current
+            name: "Charge Current"
+            icon: mdi:current-dc
+        state_color: true
+
+      - type: entities
+        title: "Program Slot 6"
+        card_mod:
+          style: |
+            ha-card {
+              font-size: 14px;
+              padding: 12px;
+            }
+        entities:
+          - entity: switch.deye_home_sunsynk_prog6_grid_charge
+            name: "Grid Charge Enable"
+            icon: mdi:battery-charging
+          - entity: number.deye_home_sunsynk_prog6_capacity
+            name: "Target SOC (%)"
+            icon: mdi:battery-50
+          - entity: time.deye_home_sunsynk_prog6_charge_start_time
+            name: "Start Time"
+            icon: mdi:clock-start
+          - entity: time.deye_home_sunsynk_prog6_charge_end_time
+            name: "End Time"
+            icon: mdi:clock-end
+          - entity: select.deye_home_sunsynk_prog6_charge_current
+            name: "Charge Current"
+            icon: mdi:current-dc
+        state_color: true
+
+  # Programming Schedule Overview
+  - type: entities
+    title: "Active Programming Schedule"
+    card_mod:
+      style: |
+        ha-card {
+          font-size: 16px;
+          padding: 16px;
+        }
+    entities:
+      - type: custom:template-entity-row
+        name: "Currently Active Program"
+        state: >-
+          {% set active_progs = [] %}
+          {% for i in range(1, 7) %}
+            {% if is_state('switch.deye_home_sunsynk_prog' + i|string + '_grid_charge', 'on') %}
+              {% set active_progs = active_progs + ['Slot ' + i|string] %}
+            {% endif %}
+          {% endfor %}
+          {{ active_progs|join(', ') if active_progs else 'None' }}
+        icon: mdi:calendar-clock
+      - type: custom:template-entity-row
+        name: "Next Scheduled Charge"
+        state: "Check individual slots above"
+        icon: mdi:clock-outline
+      - type: custom:template-entity-row
+        name: "Battery Auto-Charge"
+        state: >-
+          {% if is_state('switch.deye_home_sunsynk_toggle_system_timer', 'on') %}
+            Enabled
+          {% else %}
+            Disabled
+          {% endif %}
+        icon: mdi:battery-sync
